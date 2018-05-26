@@ -102,6 +102,8 @@ def plot_regressions(ts_df, by='all', year=2016, save_path=None):
 
         xcol = short_candidates[0]
         ycol = 'metvi_all'
+        # import ipdb
+        # ipdb.set_trace()
         # If there are na vals it's due to missing data; do not use.
         dfcols = ts_df[[xcol, ycol]].dropna()
         x = dfcols[xcol]
