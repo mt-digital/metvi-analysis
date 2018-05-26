@@ -2,24 +2,35 @@
 Testing hypothesis that metaphorical violence usage in 2016 is correlated with
 Donald Trump's tweeting.
 '''
-import datetime as dt
+import datetime
 import json
 import os
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+import seaborn as sns
 
 from collections import Counter
 from os.path import join as osjoin
+from scipy.stats import pearsonr
 
 os.environ['CONFIG_FILE'] = 'conf/default.cfg'
 
 from metacorps.app.models import IatvCorpus
 
 
-METAPHORS_URL = \
-    'http://metacorps.io/static/data/viomet-2016-snapshot-project-df.csv'
-DATE_RANGE = pd.date_range('2016-9-1', '2016-11-30', freq='D')
-IATV_CORPUS_NAME = 'Viomet Sep-Nov 2016'
+METAPHORS_URL_TEMPLATE = \
+    'http://metacorps.io/static/data/viomet-{}-snapshot-project-df.csv'
+
+def date_range(year):
+    return pd.date_range(
+        datetime.date(year, 9, 1), datetime.date(year, 11, 30), freq='D'
+    )
+
+def iatv_corpus_name(year):
+    return 'Viomet Sep-Nov {}'.format(year)
+
+NETWORKS = ['MSNBC', 'CNN', 'Fox News']
 
 
 def _local_date(d_str):
@@ -37,86 +48,364 @@ def _local_date(d_str):
         ).date()
 
 
-def get_tweets_ts(candidate):
+def get_tweets_ts(candidate, year=2016):
 
-    tweets = json.load(open('data/{}_tweets_2016.json'.format(candidate), 'r'))
+    tweets = json.load(
+        open('data/{}_tweets_{}.json'.format(candidate, year), 'r')
+    )
+
     dates = [_local_date(el['created_at']) for el in tweets]
+
     focal_dates = [d for d in dates
-                   if dt.date(2016, 9, 1) <= d
-                   and d <= dt.date(2016, 11, 30)]
+                   if datetime.date(year, 9, 1) <= d
+                   and d <= datetime.date(year, 11, 30)]
+
     date_counts = Counter(focal_dates)
-    tweets_ts = pd.Series(index=DATE_RANGE, data=0)
+    tweets_ts = pd.Series(index=date_range(year), data=0)
     for d, count in date_counts.items():
         tweets_ts[d] = count
 
     return tweets_ts
 
 
-def get_subjobj_ts(**kwargs):
-    pass
-
-
-def correlate(save_dir=None):
-
-    # Create metaphorical violence frequency series across all networks.
-    df = pd.read_csv(METAPHORS_URL, na_values='',
-                     parse_dates=['start_localtime'])
-    freq_df = daily_frequency(df, DATE_RANGE, IATV_CORPUS_NAME)
-    metvi_ts = pd.Series(index=freq_df.index, data=freq_df['freq'])
-    metvi_ts.fillna(0.0, inplace=True)
-
-    # Create timeseries of Trump tweets.
-    ts_data = dict(
-        trump=get_tweets_ts('trump'),
-        clinton=get_tweets_ts('clinton'),
-        metvi_all=metvi_ts,
-        # metvi_trump_subj=get_subjobj_ts(subj='trump'),
-        # metvi_trump_obj=get_subjobj_ts(obj='trump'),
-        # metvi_clinton_subj=get_subjobj_ts(subj='clinton'),
-        # metvi_clinton_obj=get_subjobj_ts(obj='clinton')
+def get_project_dataframe(url=METAPHORS_URL_TEMPLATE.format(2016)):
+    return pd.read_csv(
+        url, na_values='', parse_dates=['start_localtime']
     )
 
-    if save_dir is not None:
 
-        def mkpath(name):
-            return osjoin(save_dir, name + '.csv')
+def plot_regressions(ts_df, by='all', year=2016, save_path=None):
+    '''
+    Arguments:
+        ts_df (pandas.DataFrame): DataFrame with DateIndex of Twitter account
+            stats and all faceted metaphorical violence frequency timeseries.
+    '''
+    if year == 2016:
+        cand_handle = ['@HillaryClinton', '@realDonaldTrump']
+        short_candidates = ['clinton', 'trump']
+    elif year == 2012:
+        cand_handle = ['@BarackObama', '@MittRomney']
+        short_candidates = ['obama', 'romney']
 
-        save_paths = dict(
-            trump=mkpath('trump-tweets'),
-            clinton=mkpath('clinton-tweets'),
-            metvi_all=mkpath('metvi-all'),
-            # metvi_trump_subj=mkpath('metvi-trump-subj'),
-            # metvi_trump_obj=mkpath('metvi-trump-obj'),
-            # metvi_clinton_subj=mkpath('metvi-clinton-subj'),
-            # metvi_clinton_obj=mkpath('metvi-clinton-obj')
+    cand_color = ['blue', 'red']
+
+    # Plot All MV Use against Trump/Clinton tweeting.
+    if by == 'all':
+
+        def annotate(x, y, axidx):
+            axes[axidx].text(
+                6.0, 6.25, 'r={:.2f}; p={:.5f}'.format(*pearsonr(x, y)),
+                fontsize=14
+            )
+
+        fig, axes = plt.subplots(1, 2, figsize=(9.5, 4))
+
+        xcol = short_candidates[0]
+        ycol = 'metvi_all'
+        # If there are na vals it's due to missing data; do not use.
+        dfcols = ts_df[[xcol, ycol]].dropna()
+        x = dfcols[xcol]
+        y = dfcols[ycol]
+
+        sns.regplot(x=x, y=y, ax=axes[0], color='blue', ci=None)
+
+        axes[0].set_title(
+            'r={:.2f}; p={:.3f}'.format(*pearsonr(x, y)),
+            fontsize=14
         )
 
-        for key, path in save_paths.items():
-            ts = ts_data[key]
-            ts.to_csv(path, header=False)
+        xcol = short_candidates[1]
+        dfcols = ts_df[[xcol, ycol]].dropna()
+        x = dfcols[xcol]
+        y = dfcols[ycol]
 
-    return ts_data
+        sns.regplot(x=x, y=y, ax=axes[1], color='red', ci=None)
+
+        axes[0].set_ylim(axes[1].get_ylim())
+        # axes[0].set_xlim(axes[1].get_xlim() + np.array([-1.0, 5.0]))
+
+        axes[1].set_title(
+            'r={:.2f}; p={:.3f}'.format(*pearsonr(x, y)),
+            fontsize=14
+        )
+
+        plt.subplots_adjust(wspace=2.5)
+
+        # axes[1].set_xlim(axes[0].get_xlim())
+        axes[0].set_xlim(-2.5, 100)
+        axes[1].set_xlim(-2.5, 100)
+
+        axes[0].set_xlabel('# {} tweets'.format(cand_handle[0]))
+        axes[1].set_xlabel('# {} tweets'.format(cand_handle[1]))
+        axes[0].set_ylabel('MV Frequency (All)')
+        axes[1].set_ylabel('')
+
+    # Plot MV use by network against Trump/Clinton tweeting.
+    if by == 'network':
+        networks = ['msnbc', 'cnn', 'foxnews']
+        cand_color = ['blue', 'red']
+        network_name = ['MSNBC', 'CNN', 'Fox News']
+
+        fig, axes = plt.subplots(3, 2, figsize=(9.5, 10))
+        for net_idx, network in enumerate(networks):
+            for cand_idx, candidate in enumerate(short_candidates):
+                xcol = candidate
+                ycol = 'metvi_' + network
+                dfcols = ts_df[[xcol, ycol]].dropna()
+                x = dfcols[xcol]
+                y = dfcols[ycol]
+
+                sns.regplot(
+                    x=x, y=y, ax=axes[net_idx, cand_idx],
+                    color=cand_color[cand_idx], ci=None
+                )
+                if net_idx == 2:
+                    axes[net_idx, cand_idx].set_xlabel(
+                        '# {} tweets'.format(cand_handle[cand_idx])
+                    )
+                else:
+                    axes[net_idx, cand_idx].set_xlabel('')
+                if cand_idx == 0:
+                    axes[net_idx, cand_idx].set_ylabel(
+                        '{} MV Freq.'.format(network_name[net_idx])
+                    )
+                else:
+                    axes[net_idx, cand_idx].set_ylabel('')
+
+                axes[net_idx, cand_idx].set_xlim(-2.5, 100)
+                axes[net_idx, cand_idx].set_ylim(-0.5, 8.5)
+                axes[net_idx, cand_idx].set_title(
+                    'r={:.2f}; p={:.3f}'.format(*pearsonr(x, y)),
+                    fontsize=14
+                )
+
+            plt.subplots_adjust(wspace=2.5)
 
 
-def daily_frequency(df, date_index, iatv_corpus, by=None):
+    # Plot MV use by subject/object against Trump/Clinton tweeting.
+    # Here we want to see how often Clinton's tweeting casts her as
+    # subject and Trump as object, and vice-versa. Now we want two columns,
+    # one for each tweeting. Two rows, one for self-subject and one for
+    # other-object.
+    if by == 'subjobj':
+
+        fig, axes = plt.subplots(2, 2, figsize=(9.5, 8))
+
+        # Set up column names and y-axis labels of interest.
+        if year == 2016:
+            ycol_label_append = [
+                'clinton_subj', 'trump_subj', 'trump_obj', 'clinton_obj'
+            ]
+            ycol_labels = [
+                'Subject=Clinton MV freq', 'Subject=Trump MV freq',
+                'Object=Trump MV freq', 'Object=Clinton MV freq'
+            ]
+        elif year == 2012:
+            ycol_label_append = [
+                'obama_subj', 'romney_subj', 'romney_obj', 'obama_obj'
+            ]
+            ycol_labels = [
+                'Subject=Obama MV freq', 'Subject=Romney MV freq',
+                'Object=Romney MV freq', 'Object=Obama MV freq'
+            ]
+
+
+        # Track which timeseries dataframe column we are plotting.
+        ycol_idx = 0
+        for row_idx in range(2):
+            for cand_idx, candidate in enumerate(short_candidates):
+                xcol = candidate
+                ycol = 'metvi_' + ycol_label_append[ycol_idx]
+                dfcols = ts_df[[xcol, ycol]].dropna()
+                x = dfcols[xcol]
+                y = dfcols[ycol]
+
+                sns.regplot(
+                    x=x, y=y, ax=axes[row_idx, cand_idx],
+                    color=cand_color[cand_idx], ci=None
+                )
+                if row_idx == 1:
+                    axes[row_idx, cand_idx].set_xlabel(
+                        '# {} tweets'.format(cand_handle[cand_idx])
+                    )
+                else:
+                    axes[row_idx, cand_idx].set_xlabel('')
+
+                axes[row_idx, cand_idx].set_ylabel(
+                    ycol_labels[ycol_idx]
+                )
+
+                axes[row_idx, cand_idx].set_title(
+                    'r={:.2f}; p={:.5f}'.format(*pearsonr(x, y)),
+                    fontsize=14
+                )
+                axes[row_idx, cand_idx].set_ylim(-0.2, 5.25)
+                axes[row_idx, cand_idx].set_xlim(-2.5, 100)
+
+                ycol_idx += 1
+
+    if save_path:
+        plt.savefig(save_path)
+
+
+def get_subj_ts(df, subj, year=2016):
+    '''
+    Get MV use frequency timeseries for a single subject, e.g., Hillary Clinton
+    '''
+    df = df.copy()
+    # Noticed some cases of, e.g., 'Donald Trump '.
+    df.subjects = df.subjects.str.strip()
+    subj_df = df[df.subjects == subj]
+
+    # If we have na at this step it's due to dividing by zero counts.
+    # See daily_frequency for more.
+    return daily_frequency(
+        subj_df, date_range(year), iatv_corpus_name(year), by=['subjects'], predropna=True
+    )[subj].fillna(0.0)
+
+
+def get_obj_ts(df, obj, year=2016):
+    '''
+    Get MV use frequency timeseries for a single subject, e.g., Hillary Clinton
+    '''
+    df = df.copy()
+    # Noticed some cases of, e.g., 'Donald Trump '.
+    df.objects = df.objects.str.strip()
+    obj_df = df[df.objects == obj]
+
+    # If we have na at this step it's due to dividing by zero counts.
+    return daily_frequency(
+        obj_df, date_range(year), iatv_corpus_name(year), by=['objects'], predropna=True
+    )[obj].fillna(0.0)
+
+
+def get_network_ts(df, network, year=2016):
+    '''
+    MV use frequency for each network.
+    '''
+    df = df.copy()
+    # XXX daily_frequency by network works somewhat differently, but not
+    # too sure how to describe it so...WATCH OUT!
+    return daily_frequency(
+        df, date_range(year), iatv_corpus_name(year), by=['network']
+    )[network].dropna()
+
+
+def correlate_data(year=2016, save_dir=None):
+    '''
+    Create a dataframe with all series needed to make regressions of
+    faceted MV frequencies.
+    '''
+    # Create metaphorical violence frequency series across all networks.
+    url = METAPHORS_URL_TEMPLATE.format(year)
+    viomet_df = pd.read_csv(url, na_values='',
+                     parse_dates=['start_localtime'])
+    freq_df = daily_frequency(viomet_df, date_range(year), iatv_corpus_name(year))
+    metvi_ts = pd.Series(index=freq_df.index, data=freq_df['freq'])
+
+    # Create timeseries of tweets.
+    if year == 2016:
+        ts_data = dict(
+            # Twitter timeseries.
+            trump=get_tweets_ts('trump'),
+            clinton=get_tweets_ts('clinton'),
+
+            # All metaphorical violence freq timeseries.
+            metvi_all=metvi_ts,
+
+            # Trump as subject or object metvi freq timeseries.
+            metvi_trump_subj=get_subj_ts(viomet_df, 'Donald Trump'),
+            metvi_trump_obj=get_obj_ts(viomet_df, 'Donald Trump'),
+
+            # Clinton as subject or object metvi freq timeseries.
+            metvi_clinton_subj=get_subj_ts(viomet_df, 'Hillary Clinton'),
+            metvi_clinton_obj=get_obj_ts(viomet_df, 'Hillary Clinton'),
+
+            # Metvi freq on networks timeseries.
+            metvi_msnbc=get_network_ts(viomet_df, 'MSNBCW'),
+            metvi_cnn=get_network_ts(viomet_df, 'CNNW'),
+            metvi_foxnews=get_network_ts(viomet_df, 'FOXNEWSW')
+        )
+    elif year == 2012:
+        ts_data = dict(
+            # Twitter timeseries.
+            romney=get_tweets_ts('romney', year=2012),
+            obama=get_tweets_ts('obama', year=2012),
+
+            # All metaphorical violence freq timeseries.
+            metvi_all=metvi_ts,
+
+            # Trump as subject or object metvi freq timeseries.
+            metvi_romney_subj=get_subj_ts(viomet_df, 'Mitt Romney', year=2012),
+            metvi_romney_obj=get_obj_ts(viomet_df, 'Mitt Romney', year=2012),
+
+            # Clinton as subject or object metvi freq timeseries.
+            metvi_obama_subj=get_subj_ts(viomet_df, 'Barack Obama', year=2012),
+            metvi_obama_obj=get_obj_ts(viomet_df, 'Barack Obama', year=2012),
+
+            # Metvi freq on networks timeseries.
+            metvi_msnbc=get_network_ts(viomet_df, 'MSNBCW', year=2012),
+            metvi_cnn=get_network_ts(viomet_df, 'CNNW', year=2012),
+            metvi_foxnews=get_network_ts(viomet_df, 'FOXNEWSW', year=2012)
+        )
+
+    return pd.DataFrame(ts_data)
+
+
+def daily_frequency(df, date_index, iatv_corpus, by=None, predropna=False):
 
     if by is not None and 'network' in by:
         spd = shows_per_date(date_index, iatv_corpus, by_network=True)
-        daily = daily_metaphor_counts(df, date_index, by=by)
+        if predropna:
+            spd = spd.dropna()
+            daily = daily_metaphor_counts(df, date_index, by=by)
+        else:
+            daily = daily_metaphor_counts(df, date_index, by=by)
+
         ret = daily.div(spd, axis='rows')
 
     elif by is None:
+        # import ipdb
+        # ipdb.set_trace()
         spd = shows_per_date(date_index, iatv_corpus)
-        daily = daily_metaphor_counts(df, date_index, by=by)
+        if predropna:
+            spd = spd.dropna()
+            daily = daily_metaphor_counts(df, date_index, by=by)
+        else:
+            daily = daily_metaphor_counts(df, date_index, by=by)
+
         ret = daily.div(spd, axis='rows')
         ret.columns = ['freq']
 
     else:
         spd = shows_per_date(date_index, iatv_corpus)
-        daily = daily_metaphor_counts(df, date_index, by=by)
+        if predropna:
+            spd = spd.dropna()
+            daily = daily_metaphor_counts(df, date_index, by=by)
+        else:
+            daily = daily_metaphor_counts(df, date_index, by=by)
+
         ret = daily.div(spd, axis='rows')
 
     return ret
+
+
+def _get_prog_date(doc):
+    '''
+    If the hour of broadcast is in the early morning it is a re-run
+    from previous day
+    '''
+    if type(doc) is pd.Timestamp:
+        slt = doc
+        d = slt.date()
+    else:
+        slt = doc.start_localtime
+        d = slt.date()
+
+    if slt.hour < 8:
+        d -= datetime.timedelta(days=1)
+
+    return d
 
 
 def shows_per_date(date_index, iatv_corpus, by_network=False):
@@ -139,13 +428,12 @@ def shows_per_date(date_index, iatv_corpus, by_network=False):
     docs = iatv_corpus.documents
 
     n_dates = len(date_index)
-
     if not by_network:
 
         # get all date/show name tuples & remove show re-runs from same date
         prog_dates = set(
             [
-                (d.program_name, d.start_localtime.date())
+                (d.program_name, _get_prog_date(d))
                 for d in docs
             ]
         )
@@ -153,15 +441,24 @@ def shows_per_date(date_index, iatv_corpus, by_network=False):
         # count total number of shows on each date
         # note we count the second entry of the tuples, which is just the
         # date, excluding program name
-        shows_per_date = Counter(el[1] for el in prog_dates)
+        year = list(prog_dates)[0][1].year
+        shows_per_date = Counter(el[1] for el in prog_dates
+                                 if el[1] > datetime.date(year, 8, 31))
 
         spd_series = pd.Series(
             index=date_index,
             data={'counts': np.zeros(n_dates)}
         ).sort_index()
 
-        for date in shows_per_date:
-            spd_series.loc[date] = shows_per_date[date]
+        # import ipdb
+        # ipdb.set_trace()
+
+        try:
+            for date in shows_per_date:
+                spd_series.loc[date] = shows_per_date[date]
+        except:
+            import ipdb
+            ipdb.set_trace()
 
         return spd_series
 
@@ -170,7 +467,7 @@ def shows_per_date(date_index, iatv_corpus, by_network=False):
         # & remove show re-runs from same date
         prog_dates = set(
             [
-                (d.program_name, d.network, d.start_localtime.date())
+                (d.program_name, d.network, _get_prog_date(d))
                 for d in docs
             ]
         )
@@ -178,16 +475,20 @@ def shows_per_date(date_index, iatv_corpus, by_network=False):
         # count total number of shows on each date for each network
         # note we count the second entry of the tuples, which is just the
         # date, excluding program name
-        shows_per_network_per_date = Counter(el[1:] for el in prog_dates)
+        year = list(prog_dates)[0][2].year
+        shows_per_network_per_date = Counter(
+            el[1:] for el in prog_dates if el[2] > datetime.date(year, 8, 31)
+        )
 
         n_dates = len(date_index)
         spd_frame = pd.DataFrame(
             index=date_index,
-            data={
-                'MSNBCW': np.zeros(n_dates),
-                'CNNW': np.zeros(n_dates),
-                'FOXNEWSW': np.zeros(n_dates)
-            }
+            columns=['MSNBCW', 'CNNW', 'FOXNEWSW']
+            # data={
+            #     'MSNBCW': np.zeros(n_dates),
+            #     'CNNW': np.zeros(n_dates),
+            #     'FOXNEWSW': np.zeros(n_dates)
+            # }
         )
 
         for tup in shows_per_network_per_date:
@@ -215,7 +516,11 @@ def daily_metaphor_counts(df, date_index, by=None):
 
     counts = _count_by_start_localtime(df, column_list=by)
 
-    groupby_spec = [counts.start_localtime.dt.date, *counts[by]]
+    # groupby_spec = [counts.start_localtime.dt.date, *counts[by]]
+    groupby_spec = [
+        pd.Series([_get_prog_date(d) for d in counts.start_localtime], name='start_localtime'),
+        *counts[by]
+    ]
 
     counts_gb = counts.groupby(groupby_spec).sum().reset_index()
 
