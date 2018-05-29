@@ -12,7 +12,7 @@ import seaborn as sns
 
 from collections import Counter
 from os.path import join as osjoin
-from scipy.stats import pearsonr
+from scipy.stats import pearsonr, linregress
 
 os.environ['CONFIG_FILE'] = 'conf/default.cfg'
 
@@ -102,8 +102,6 @@ def plot_regressions(ts_df, by='all', year=2016, save_path=None):
 
         xcol = short_candidates[0]
         ycol = 'metvi_all'
-        # import ipdb
-        # ipdb.set_trace()
         # If there are na vals it's due to missing data; do not use.
         dfcols = ts_df[[xcol, ycol]].dropna()
         x = dfcols[xcol]
@@ -111,8 +109,11 @@ def plot_regressions(ts_df, by='all', year=2016, save_path=None):
 
         sns.regplot(x=x, y=y, ax=axes[0], color='blue', ci=None)
 
+        linreg = linregress(x, y)
         axes[0].set_title(
-            'r={:.2f}; p={:.3f}'.format(*pearsonr(x, y)),
+            r'slope={:.2f}; $r^2={:.2f}$, $p={:.3f}$'.format(
+               linreg[0], linreg[2]**2, linreg[3]
+            ),
             fontsize=14
         )
 
@@ -126,8 +127,15 @@ def plot_regressions(ts_df, by='all', year=2016, save_path=None):
         axes[0].set_ylim(axes[1].get_ylim())
         # axes[0].set_xlim(axes[1].get_xlim() + np.array([-1.0, 5.0]))
 
+        # axes[1].set_title(
+        #     'r={:.2f}; p={:.3f}'.format(*pearsonr(x, y)),
+        #     fontsize=14
+        # )
+        linreg = linregress(x, y)
         axes[1].set_title(
-            'r={:.2f}; p={:.3f}'.format(*pearsonr(x, y)),
+            r'slope={:.2f}; $r^2={:.2f}$, $p={:.3f}$'.format(
+               linreg[0], linreg[2]**2, linreg[3]
+            ),
             fontsize=14
         )
 
@@ -176,10 +184,19 @@ def plot_regressions(ts_df, by='all', year=2016, save_path=None):
 
                 axes[net_idx, cand_idx].set_xlim(-2.5, 100)
                 axes[net_idx, cand_idx].set_ylim(-0.5, 8.5)
+
+                # Don't know why but need this astype to avoid scipy err. XXX
+                linreg = linregress(x.astype(float), y.astype(float))
                 axes[net_idx, cand_idx].set_title(
-                    'r={:.2f}; p={:.3f}'.format(*pearsonr(x, y)),
+                    r'slope={:.2f}; $r^2={:.2f}$, $p={:.3f}$'.format(
+                       linreg[0], linreg[2]**2, linreg[3]
+                    ),
                     fontsize=14
                 )
+                # axes[net_idx, cand_idx].set_title(
+                #     'r={:.2f}; p={:.3f}'.format(*pearsonr(x, y)),
+                #     fontsize=14
+                # )
 
             plt.subplots_adjust(wspace=2.5)
 
@@ -237,8 +254,15 @@ def plot_regressions(ts_df, by='all', year=2016, save_path=None):
                     ycol_labels[ycol_idx]
                 )
 
+                # axes[row_idx, cand_idx].set_title(
+                #     'r={:.2f}; p={:.5f}'.format(*pearsonr(x, y)),
+                #     fontsize=14
+                # )
+                linreg = linregress(x, y)
                 axes[row_idx, cand_idx].set_title(
-                    'r={:.2f}; p={:.5f}'.format(*pearsonr(x, y)),
+                    r'slope={:.2f}; $r^2={:.2f}$, $p={:.3f}$'.format(
+                       linreg[0], linreg[2]**2, linreg[3]
+                    ),
                     fontsize=14
                 )
                 axes[row_idx, cand_idx].set_ylim(-0.2, 5.25)
@@ -367,8 +391,6 @@ def daily_frequency(df, date_index, iatv_corpus, by=None, predropna=False):
         ret = daily.div(spd, axis='rows')
 
     elif by is None:
-        # import ipdb
-        # ipdb.set_trace()
         spd = shows_per_date(date_index, iatv_corpus)
         if predropna:
             spd = spd.dropna()
@@ -452,8 +474,6 @@ def shows_per_date(date_index, iatv_corpus, by_network=False):
             data={'counts': np.zeros(n_dates)}
         ).sort_index()
 
-        # import ipdb
-        # ipdb.set_trace()
 
         try:
             for date in shows_per_date:
