@@ -69,6 +69,7 @@ def get_tweets_ts(candidate, year=2016):
 
 
 def get_project_dataframe(url=METAPHORS_URL_TEMPLATE.format(2016)):
+
     return pd.read_csv(
         url, na_values='', parse_dates=['start_localtime']
     )
