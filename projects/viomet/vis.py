@@ -8,7 +8,7 @@ Date: April 01, 2017
 import matplotlib.pyplot as plt
 import matplotlib.dates as pltdates
 import pandas as pd
-import seaborn as sns
+# import seaborn as sns
 
 from datetime import date, datetime, timedelta
 
@@ -19,7 +19,7 @@ from projects.common.analysis import (
 )
 
 
-CUR_PAL = sns.color_palette()
+# CUR_PAL = sns.color_palette()
 
 
 # for 8.5x11 paper
@@ -37,10 +37,10 @@ def by_network_frequency_figure(
             font_scale=1.15,
             save_path=None):
 
-    sns.axes_style("darkgrid")
-    sns.set(font_scale=font_scale)
+    # sns.axes_style("darkgrid")
+    # sns.set(font_scale=font_scale)
 
-    CUR_PAL = sns.color_palette()
+    # CUR_PAL = sns.color_palette()
 
     df = frequency_df
 
@@ -71,14 +71,17 @@ def by_network_frequency_figure(
 
             # put networks in desired order, left to right
             networks = ['MSNBCW', 'CNNW', 'FOXNEWSW']
+            line_styles = [':', '--', '-']
+            markers = ['s', 'o', '^']
+            # markers = ['bs', 'go', 'r^']
 
             network_freq = daily_frequency(
                 df, date_range, iatv_corpus_name, by=['network']
             )
 
             ax = network_freq[networks].plot(
-                style='o', ms=14, alpha=0.5, legend=False,
-                figsize=DEFAULT_FIGSIZE
+                style=markers, mew=1, mfc='white', ms=6, alpha=0.9, legend=False,
+                figsize=DEFAULT_FIGSIZE, mec='lightgrey'
             )
 
             for net_idx, network in enumerate(networks):
@@ -103,25 +106,93 @@ def by_network_frequency_figure(
                 datas = [fg, fg, fe, fe, fg, fg]
 
                 network_formatted = ['MSNBC', 'CNN', 'Fox News']
+
                 pd.Series(
                     index=dates, data=datas
                 ).plot(
-                    lw=8, ax=ax, ls='-', color=CUR_PAL[net_idx], alpha=0.9,
-                    legend=True, label=network_formatted[net_idx]
+                    lw=3, ax=ax, color='k',
+                    ls=line_styles[net_idx],
+                    # legend=True, label=network_formatted[net_idx]
                 )
 
             ax.xaxis.set_minor_formatter(pltdates.DateFormatter('%-d'))
             ax.xaxis.set_minor_locator(pltdates.DayLocator(bymonthday=(1, 15)))
 
-            ax.grid(which='minor', axis='x')
+            yheight = 0.1
+            zo = 10
+            textargs = dict(
+                size=13,
+                ha='right',
+                bbox=dict(alpha=0.6, color='white')
+            )
+            if '2016' in iatv_corpus_name:
+                ax.axvline(
+                    datetime(2016, 9, 26), ymax=yheight, color='k', zorder=zo
+                )
+                ax.axvline(
+                    datetime(2016, 10, 9), ymax=yheight, color='k', zorder=zo
+                )
+                ax.axvline(
+                    datetime(2016, 10, 19), ymax=yheight, color='k', zorder=zo
+                )
+                # ax.axhline(
+                #     yheight, color='k', xmin=0.278, xmax=0.535)
+                # , '2016-9-26', '2016-10-19', zorder=1
+                # )
+                ax.text('2016-9-25', 0.2, "Debate #1", **textargs)
+                ax.text('2016-10-8', 0.2, "#2", **textargs)
+                ax.text('2016-10-18', 0.2, "#3", **textargs)
+                ax.set_xlim(datetime(2016, 8, 31), datetime(2016, 11, 29))
+
+            if '2012' in iatv_corpus_name:
+                ax.axvline(
+                    datetime(2012, 10, 3), ymax=yheight, color='k', zorder=zo
+                )
+                ax.axvline(
+                    datetime(2012, 10, 16), ymax=yheight, color='k', zorder=zo
+                )
+                ax.axvline(
+                    datetime(2012, 10, 22), ymax=yheight, color='k', zorder=zo
+                )
+                # ax.axhline(
+                #     yheight, color='k', xmin=0.278, xmax=0.535)
+                # , '2016-9-26', '2016-10-19', zorder=1
+                # )
+                ax.text('2012-10-2', 0.2, "Debate #1", **textargs)
+                ax.text('2012-10-15', 0.2, "#2", **textargs)
+                ax.text('2012-10-21', 0.2, "#3", **textargs)
+                ax.set_xlim(datetime(2012, 8, 31), datetime(2012, 11, 29))
+
+            ax.grid(False)
 
             ax.set_xlabel('Date')
             ax.set_ylabel('Frequency of usage')
             ax.set_title(
-                'Metaphorical violence usage on each of the three networks'
+                'Metaphorical violence usage data and dynamic model'
             )
 
+            ax.spines['right'].set_visible(False)
+            ax.spines['top'].set_visible(False)
+
             plt.tight_layout()
+
+            ax.set_ylim(-.25, 7.25)
+
+            import matplotlib.lines as mlines
+            net_lines = []
+
+            # Manually create the legend with line and marker styles.
+            for net_idx, network in enumerate(network_formatted):
+                net_lines.append(
+                    mlines.Line2D(
+                        [], [],
+                        mfc='white', color='black', marker=markers[net_idx],
+                        markersize=7.5, ls=line_styles[net_idx],
+                        label=network, mec='gray'
+                    )
+                )
+            # 3.8 handlelength to only have whole dashes.
+            plt.legend(handles=net_lines, handlelength=3.8)
 
             if save_path is not None:
                 fig = ax.get_figure()
@@ -137,6 +208,7 @@ def plot_daily_usage(df, ma_period=7, lw=3, marker='o', ms=10, xlab='Date',
     Plot daily and `ma_period`-day moving average from dataframe with index
     of every date in observation period (currently Sep 1 - Nov 30)
     '''
+    import seaborn as sns
     sns.set(font_scale=1.75)
 
     # calculate the moving average over ma_period

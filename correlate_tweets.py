@@ -507,11 +507,6 @@ def shows_per_date(date_index, iatv_corpus, by_network=False):
         spd_frame = pd.DataFrame(
             index=date_index,
             columns=['MSNBCW', 'CNNW', 'FOXNEWSW']
-            # data={
-            #     'MSNBCW': np.zeros(n_dates),
-            #     'CNNW': np.zeros(n_dates),
-            #     'FOXNEWSW': np.zeros(n_dates)
-            # }
         )
 
         for tup in shows_per_network_per_date:

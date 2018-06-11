@@ -1,2 +1,5 @@
 *.cfg
 data
+Figures/ SupplementTables/
+Figures/
+SupplementTables/
