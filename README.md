@@ -1,6 +1,6 @@
 # metvi-analysis
 
-To run the analyses you must [download the data](http://mt.digital/static/data/metvi-data.tar.gz).
+To run the analyses you must [download the data](http://mt.digital/static/data/metvi-data.tar.gz) (609 MB).
 To follow the following instructions, download the archive to this project directory. When you
 unzip the archive,  
 MongoDB must be installed and running (see the [Install section of the MongoDB manual](https://docs.mongodb.com/manual/installation/)
@@ -17,3 +17,5 @@ annotations we used in the paper. If you'd like to edit our annotations to make 
 [metacorps](https://github.com/mt-digital/metacorps) locally, then re-run the analyses here 
 by modifying `make_viomet_pubdata.py` and `correlate_tweets.py` to use your modified local
 database instead of the .csvs. For reference, those .csv files are http://metacorps.io/static/data/viomet-2012-snapshot-project-df.csv and http://metacorps.io/static/data/viomet-2016-snapshot-project-df.csv, respectively.
+
+If you have any trouble, please open an Issue!
