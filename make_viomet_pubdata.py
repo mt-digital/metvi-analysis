@@ -17,7 +17,8 @@ from projects.viomet.analysis import (
 )
 from projects.viomet.vis import by_network_frequency_figure
 
-YEARS = [2012, 2016]
+# YEARS = [2012, 2016]
+YEARS = [2016]
 
 FORMATTERS = {
     '$f^{(1)}$': '{:,.2f}'.format,
@@ -33,8 +34,9 @@ for year in YEARS:
 
     # Build URL for csv of metaphor annotations.
     metaphors_url = \
-        'http://metacorps.io/static/data/' \
-        'viomet-{}-snapshot-project-df.csv'.format(year)
+        'http://metacorps.io/static/data/viomet-sep-nov-{}.csv'.format(year)
+    # 'http://metacorps.io/static/data/'
+    # 'viomet-{}-snapshot-project-df.csv'.format(year)
 
     # Still need to access the corpus on MongoDB to calculate some frequencies.
     iatv_corpus_name = 'Viomet Sep-Nov {}'.format(year)

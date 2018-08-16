@@ -1,4 +1,4 @@
-#! venv/bin/python
+#! /usr/local/bin/python3
 '''
 export_project_csv.py
 
@@ -12,6 +12,15 @@ Date: February 27, 2017
 '''
 import csv
 import pandas as pd
+
+import os
+import sys
+
+sys.path.append(
+    os.path.join('..', '..')
+)
+
+os.environ['CONFIG_FILE'] = 'conf/default.cfg'
 
 from metacorps.app.models import Project, IatvDocument
 
@@ -65,16 +74,7 @@ class ProjectExporter:
 
     def export_csv(self, export_path):
 
-        with open(export_path, 'w') as f:
-
-            csvwriter = csv.writer(f)
-
-            csvwriter.writerow(
-                self.colunm_names
-            )
-
-            for inst in self._keyed_instances():
-                csvwriter.writerow(_format_row(inst))
+        self.export_dataframe().to_csv(export_path)
 
     def export_dataframe(self):
 
@@ -103,7 +103,7 @@ def main(project_name, export_path):
     """
 
     pe = ProjectExporter(project_name)
-    pe.export(export_path)
+    pe.export_csv(export_path)
 
 
 if __name__ == '__main__':

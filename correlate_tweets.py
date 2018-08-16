@@ -20,7 +20,8 @@ from metacorps.app.models import IatvCorpus
 
 
 METAPHORS_URL_TEMPLATE = \
-    'http://metacorps.io/static/data/viomet-{}-snapshot-project-df.csv'
+    'http://metacorps.io/static/data/viomet-sep-nov-{}.csv'
+    # 'http://metacorps.io/static/data/viomet-{}-snapshot-project-df.csv'
 
 def date_range(year):
     return pd.date_range(
