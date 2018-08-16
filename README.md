@@ -12,4 +12,8 @@ cd data && mongorestore viomet-mongodump/
 ```
 
 Now you are ready to run the analyses. Use `make_viomet_pubdata.py` and `correlate_tweets.py` to generate
-the analyses found in the paper.
+the analyses found in the paper. These fetch two .csv files, one for 2012 and one for 2016, that contain all 
+annotations we used in the paper. If you'd like to edit our annotations to make your own, you can run
+[metacorps](https://github.com/mt-digital/metacorps) locally, then re-run the analyses here 
+by modifying `make_viomet_pubdata.py` and `correlate_tweets.py` to use your modified local
+database instead of the .csvs. For reference, those .csv files are http://metacorps.io/static/data/viomet-2012-snapshot-project-df.csv and http://metacorps.io/static/data/viomet-2016-snapshot-project-df.csv, respectively.
