@@ -42,10 +42,12 @@ def get_project_data_frame(project_name):
         project_name = str('Viomet Sep-Nov ' + str(project_name))
 
     def is_url(s): return urlparse(project_name).hostname is not None
+
     if is_url(project_name) or os.path.exists(project_name):
         ret = pd.read_csv(project_name, na_values='',
                           parse_dates=['start_localtime'])
         return ret
+
 
     return ProjectExporter(project_name).export_dataframe()
 
@@ -139,7 +141,7 @@ def _count_by_start_localtime(df,
     return ret_df
 
 
-def shows_per_date(date_index, iatv_corpus, by_network=False):
+def shows_per_date(project_df, date_index, by_network=False):
     '''
     Arguments:
         date_index (pandas.DatetimeIndex): Full index of dates covered by
@@ -153,26 +155,18 @@ def shows_per_date(date_index, iatv_corpus, by_network=False):
         (pandas.Series) if by_network is False, (pandas.DataFrame)
             if by_network is true.
     '''
-    if type(iatv_corpus) is str:
-        iatv_corpus = IatvCorpus.objects(name=iatv_corpus)[0]
-
-    docs = iatv_corpus.documents
-
     n_dates = len(date_index)
 
     if not by_network:
 
-        # get all date/show name tuples & remove show re-runs from same date
+        # Get all date/show name tuples & remove show re-runs from same date.
         prog_dates = set(
-            [
-                (d.program_name, d.start_localtime.date())
-                for d in docs
-            ]
+            zip(project_df.program_name, project_df.start_localtime.dt.date)
         )
 
-        # count total number of shows on each date
+        # Count total number of shows on each date
         # note we count the second entry of the tuples, which is just the
-        # date, excluding program name
+        # date, excluding program name.
         shows_per_date = Counter(el[1] for el in prog_dates)
 
         spd_series = pd.Series(
@@ -186,18 +180,18 @@ def shows_per_date(date_index, iatv_corpus, by_network=False):
         return spd_series
 
     else:
-        # get all date/network/show name tuples
-        # & remove show re-runs from same date
+        # Get all date/network/show name tuples
+        # & remove show re-runs from same date.
         prog_dates = set(
-            [
-                (d.program_name, d.network, d.start_localtime.date())
-                for d in docs
-            ]
+            zip(project_df.program_name,
+                project_df.network,
+                project_df.start_localtime.dt.date
+            )
         )
 
-        # count total number of shows on each date for each network
+        # Count total number of shows on each date for each network
         # note we count the second entry of the tuples, which is just the
-        # date, excluding program name
+        # date, excluding program name.
         shows_per_network_per_date = Counter(el[1:] for el in prog_dates)
 
         n_dates = len(date_index)
@@ -216,7 +210,7 @@ def shows_per_date(date_index, iatv_corpus, by_network=False):
         return spd_frame
 
 
-def daily_metaphor_counts(df, date_index, by=None):
+def daily_metaphor_counts(project_df, date_index, by=None):
     '''
     Given an Analyzer.df, creates a pivot table with date_index as index. Will
     group by the column names given in by. First deals with hourly data in
@@ -233,7 +227,7 @@ def daily_metaphor_counts(df, date_index, by=None):
     if by is None:
         by = []
 
-    counts = _count_by_start_localtime(df, column_list=by)
+    counts = _count_by_start_localtime(project_df, column_list=by)
 
     groupby_spec = [counts.start_localtime.dt.date, *counts[by]]
 
@@ -245,22 +239,24 @@ def daily_metaphor_counts(df, date_index, by=None):
     return ret
 
 
-def daily_frequency(df, date_index, iatv_corpus, by=None):
+def daily_frequency(project_df, date_index, by=None):
+
+    instances = project_df[project_df.include]
 
     if by is not None and 'network' in by:
-        spd = shows_per_date(date_index, iatv_corpus, by_network=True)
-        daily = daily_metaphor_counts(df, date_index, by=by)
+        spd = shows_per_date(project_df, date_index, by_network=True)
+        daily = daily_metaphor_counts(instances, date_index, by=by)
         ret = daily.div(spd, axis='rows')
 
     elif by is None:
-        spd = shows_per_date(date_index, iatv_corpus)
-        daily = daily_metaphor_counts(df, date_index, by=by)
+        spd = shows_per_date(project_df, date_index)
+        daily = daily_metaphor_counts(instances, date_index, by=by)
         ret = daily.div(spd, axis='rows')
         ret.columns = ['freq']
 
     else:
-        spd = shows_per_date(date_index, iatv_corpus)
-        daily = daily_metaphor_counts(df, date_index, by=by)
+        spd = shows_per_date(project_df, date_index)
+        daily = daily_metaphor_counts(instances, date_index, by=by)
         ret = daily.div(spd, axis='rows')
 
     return ret

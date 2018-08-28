@@ -15,7 +15,6 @@ from rpy2.robjects.packages import importr
 from rpy2 import robjects as ro
 from rpy2.robjects import pandas2ri
 
-from metacorps.app.models import IatvCorpus
 from projects.common import (
     daily_frequency, daily_metaphor_counts, get_project_data_frame
 )
@@ -172,7 +171,7 @@ class PartitionInfo:
         return cls(partition_date_1, partition_date_2, f_ground, f_excited)
 
 
-def partition_info_table(viomet_df,
+def partition_info_table(project_df,
                          date_range,
                          partition_infos):
     '''
@@ -185,8 +184,10 @@ def partition_info_table(viomet_df,
     columns = ['$t_0^{(2)}$', '$t^{(2)}_{N^{(2)}}$', '$f^{(1)}$',
                '$f^{(2)}$', 'reactivity', 'total uses']
 
+    project_df = project_df[project_df.include]
+
     counts_df = daily_metaphor_counts(
-        viomet_df, date_range, by=['network']
+        project_df, date_range, by=['network']
     )
 
     data = []
@@ -207,7 +208,7 @@ def partition_info_table(viomet_df,
     return pd.DataFrame(data=data, index=index, columns=columns)
 
 
-def by_network_word_table(viomet_df,
+def by_network_word_table(project_df,
                           date_range,
                           partition_infos,
                           words=['hit', 'beat', 'attack']
@@ -227,8 +228,9 @@ def by_network_word_table(viomet_df,
 
     df = pd.DataFrame(index=index, columns=columns, data=0.0)
 
+    project_df = project_df[project_df.include]
     counts_df = daily_metaphor_counts(
-        viomet_df, date_range, by=['network', 'facet_word']
+        project_df, date_range, by=['network', 'facet_word']
     )
 
     for idx, netid in enumerate(['MSNBCW', 'CNNW', 'FOXNEWSW']):
@@ -259,7 +261,7 @@ def by_network_word_table(viomet_df,
     return df
 
 
-def model_fits_table(viomet_df, date_range, network_fits, top_n=10):
+def model_fits_table(project_df, date_range, network_fits, top_n=10):
     '''
     Relative ikelihoods of null model vs the best dynamic model fit and
     greater-AIC dynamic model fits vs the best dynamic model fit.
@@ -273,6 +275,7 @@ def model_fits_table(viomet_df, date_range, network_fits, top_n=10):
         top_n (int): number of top-performing models by relative likelihood
             to include in table.
     '''
+    project_df = project_df[project_df.include]
 
     networks = ['MSNBCW', 'CNNW', 'FOXNEWSW']
     ret = {}
@@ -319,7 +322,7 @@ def model_fits_table(viomet_df, date_range, network_fits, top_n=10):
     return ret
 
 
-def by_network_subj_obj_table(viomet_df,
+def by_network_subj_obj_table(project_df,
                               date_range,
                               partition_infos,
                               subjects=['Barack Obama', 'Mitt Romney'],
@@ -327,6 +330,7 @@ def by_network_subj_obj_table(viomet_df,
     '''
     TODO
     '''
+    project_df = project_df[project_df.include]
     networks = ['MSNBC', 'CNN', 'Fox News']
     columns = ['fg', 'fe', 'reactivity', 'total uses']
 
@@ -343,15 +347,15 @@ def by_network_subj_obj_table(viomet_df,
 
     # Next two blocks support more than two subjects or objects.
     subject_rows = reduce(
-        lambda x, y: (viomet_df.subjects == x) | (viomet_df.subjects == y),
+        lambda x, y: (project_df.subjects == x) | (project_df.subjects == y),
         subjects
     )
     object_rows = reduce(
-        lambda x, y: (viomet_df.objects == x) | (viomet_df.objects == y),
+        lambda x, y: (project_df.objects == x) | (project_df.objects == y),
         objects
     )
-    subject_df = viomet_df[subject_rows]
-    object_df = viomet_df[object_rows]
+    subject_df = project_df[subject_rows]
+    object_df = project_df[object_rows]
 
     subject_counts_df = daily_metaphor_counts(
         subject_df, date_range, by=['network', 'subjects'],
@@ -443,39 +447,14 @@ def _get_excited(counts_df, network_id, partition_infos,
         return ret, n_excited
 
 
-def viomet_analysis_setup(year=2012):
-    '''
-    Returns:
-        viomet_df and partition_infos
-    '''
-    if year == 2012:
-        iatv_corpus_name = 'Viomet Sep-Nov 2012'
-        metaphors_url = 'http://metacorps.io/static/data/' + \
-                        'viomet-2012-snapshot-project-df.csv'
-        date_range = pd.date_range('2012-9-1', '2012-11-30', freq='D')
-    if year == 2016:
-        iatv_corpus_name = 'Viomet Sep-Nov 2016'
-        metaphors_url = 'http://metacorps.io/static/data/' + \
-                        'viomet-2016-snapshot-project-df.csv'
-        date_range = pd.date_range('2016-9-1', '2016-11-30', freq='D')
-
-    viomet_df = get_project_data_frame(metaphors_url)
-    fits = fit_all_networks(viomet_df, date_range, iatv_corpus_name)
-    networks = ['MSNBCW', 'CNNW', 'FOXNEWSW']
-    partition_infos = {network: fits[network][0]
-                       for network in networks}
-
-    return viomet_df, date_range, partition_infos
-
-
-def fit_all_networks(df, date_range, iatv_corpus_name,
+def fit_all_networks(project_df, date_range,
                      by_network=True, poisson=False, verbose=False):
-
-    ic = IatvCorpus.objects(name=iatv_corpus_name)[0]
 
     # The first date of date_range can't be the last excited state date.
     last_excited_date_candidates = date_range[1:]
 
+    # Determining the possible first and last dates of the start and end
+    # of State 2.
     candidate_excited_date_pairs = [
         (fd, ld)
         for ld in last_excited_date_candidates
@@ -484,12 +463,7 @@ def fit_all_networks(df, date_range, iatv_corpus_name,
 
     if by_network:
 
-        if iatv_corpus_name is None:
-            raise RuntimeError(
-                'If by_network=True, must provide iatv_corpus_name'
-            )
-
-        network_freq = daily_frequency(df, date_range, ic, by=['network'])
+        network_freq = daily_frequency(project_df, date_range, by=['network'])
 
         results = {}
         for network in ['MSNBCW', 'CNNW', 'FOXNEWSW']:
@@ -526,7 +500,8 @@ def fit_all_networks(df, date_range, iatv_corpus_name,
 
     else:
 
-        all_freq = daily_frequency(df, date_range, ic).reset_index().dropna()
+        all_freq = \
+            daily_frequency(project_df, date_range).reset_index().dropna()
 
         all_freq.columns = ['date', 'freq']
 

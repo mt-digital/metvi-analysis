@@ -18,7 +18,8 @@ from projects.viomet.analysis import (
 from projects.viomet.vis import by_network_frequency_figure
 
 # YEARS = [2012, 2016]
-YEARS = [2016]
+# YEARS = [2016]
+YEARS = [2012]
 
 FORMATTERS = {
     '$f^{(1)}$': '{:,.2f}'.format,
@@ -32,20 +33,12 @@ for year in YEARS:
 
     print('creating tables for {}'.format(year))
 
-    # Build URL for csv of metaphor annotations.
-    metaphors_url = \
-        'http://metacorps.io/static/data/viomet-sep-nov-{}.csv'.format(year)
-    # 'http://metacorps.io/static/data/'
-    # 'viomet-{}-snapshot-project-df.csv'.format(year)
-
-    # Still need to access the corpus on MongoDB to calculate some frequencies.
-    iatv_corpus_name = 'Viomet Sep-Nov {}'.format(year)
-
     # Load csv into pandas DataFrame and set up the date range for given year.
-    viomet_df = get_project_data_frame(metaphors_url)
+    metaphors_filename = 'Data/viomet-sep-nov-{}.csv'.format(year)
+    project_df = get_project_data_frame(metaphors_filename)
     # Only considering attack, hit, and beat.
-    viomet_df = viomet_df[
-        viomet_df['facet_word'].isin(['hit', 'attack', 'beat'])
+    project_df = project_df[
+        project_df['facet_word'].isin(['hit', 'attack', 'beat'])
     ]
     date_range = pd.date_range(
         str(year) + '-9-1', str(year) + '-11-30', freq='D'
@@ -61,8 +54,9 @@ for year in YEARS:
     else:
         print('fitting model for {} and saving to disk'.format(year))
         network_fits = fit_all_networks(
-            viomet_df, date_range, iatv_corpus_name
+            project_df, date_range
         )
+
         with open(fits_path, 'wb') as f:
             pickle.dump(network_fits, f)
 
@@ -76,22 +70,21 @@ for year in YEARS:
     # Plot the three model fits (Figure 2).
     print('making frequency figure by network')
     by_network_frequency_figure(
-        viomet_df, date_range=date_range,
-        iatv_corpus_name=iatv_corpus_name,
+        project_df, date_range=date_range,
         partition_infos=partition_infos,
         save_path='Figures/ModelFits-{}.pdf'.format(year)
     )
 
     # Tabulate start/end excited state dates and frequencies
     # for each network (Table 1).
-    pi_table = partition_info_table(viomet_df, date_range, partition_infos)
+    pi_table = partition_info_table(project_df, date_range, partition_infos)
     print(pi_table)
     with open('Figures/Table1-{}.tex'.format(year), 'w') as f:
         pi_table.to_latex(f, escape=False,
                           formatters=FORMATTERS)
 
     # Tabulate frequencies for various word-network pairs (Table 2).
-    net_word = by_network_word_table(viomet_df, date_range, partition_infos)
+    net_word = by_network_word_table(project_df, date_range, partition_infos)
     print(net_word)
     with open('Figures/Table2-{}.tex'.format(year), 'w') as f:
         net_word.to_latex(f, formatters=FORMATTERS, escape=False)
@@ -105,7 +98,7 @@ for year in YEARS:
         objects = ['Hillary Clinton', 'Donald Trump']
 
     net_subobj = by_network_subj_obj_table(
-        viomet_df, date_range, partition_infos,
+        project_df, date_range, partition_infos,
         subjects=subjects, objects=objects
     )
     print(net_subobj)
@@ -113,7 +106,7 @@ for year in YEARS:
         net_subobj.to_latex(f, formatters=FORMATTERS, escape=False)
 
     network_fits_tables = model_fits_table(
-        viomet_df, date_range, network_fits, top_n=10
+        project_df, date_range, network_fits, top_n=10
     )
     networks = ['MSNBCW', 'CNNW', 'FOXNEWSW']
 

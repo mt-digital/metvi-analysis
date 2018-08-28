@@ -19,6 +19,9 @@ import sys
 sys.path.append(
     os.path.join('..', '..')
 )
+sys.path.append(
+    os.path.join('..')
+)
 
 os.environ['CONFIG_FILE'] = 'conf/default.cfg'
 
@@ -29,20 +32,16 @@ IATV_DOCUMENT_COLUMNS = [
     'start_localtime',
     'start_time',
     'stop_time',
-    'runtime_seconds',
     'network',
     'program_name',
     'iatv_id',
 ]
 
 INSTANCE_COLUMNS = [
-    'conceptual_metaphor',
-    'spoken_by',
     'subjects',
     'objects',
-    'active_passive',
     'text',
-    'tense',
+    'include',
     'repeat',
     'repeat_index'
 ]
@@ -61,7 +60,6 @@ class ProjectExporter:
             (facet.word, instance)
             for facet in self.project.facets
             for instance in facet.instances
-            if instance.include
         )
         self.column_names =\
             IATV_DOCUMENT_COLUMNS + \

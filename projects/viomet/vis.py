@@ -27,11 +27,10 @@ DEFAULT_FIGSIZE = (7.5, 5)
 
 
 def by_network_frequency_figure(
-            frequency_df,
+            project_df,
             date_range=pd.date_range(
                 '2016-09-01', '2016-11-30', freq='D'
             ),
-            iatv_corpus_name=None,
             freq=True,
             partition_infos=None,
             font_scale=1.15,
@@ -42,15 +41,13 @@ def by_network_frequency_figure(
 
     # CUR_PAL = sns.color_palette()
 
-    df = frequency_df
-
     # fits are not being shown for this condition
     if (partition_infos is None):
 
         if freq:
 
             network_freq = daily_frequency(
-                df, date_range, iatv_corpus_name, by=['network']
+                project_df, date_range, by=['network']
             )
 
             network_freq.plot(style='o')
@@ -58,7 +55,7 @@ def by_network_frequency_figure(
         else:
 
             full_df = daily_metaphor_counts(
-                df, ['network'], date_range
+                project_df, ['network'], date_range
             )[['MSNBCW', 'CNNW', 'FOXNEWSW']]
 
             full_df.plot(style='o')
@@ -76,7 +73,7 @@ def by_network_frequency_figure(
             # markers = ['bs', 'go', 'r^']
 
             network_freq = daily_frequency(
-                df, date_range, iatv_corpus_name, by=['network']
+                project_df, date_range, by=['network']
             )
 
             ax = network_freq[networks].plot(
@@ -125,7 +122,7 @@ def by_network_frequency_figure(
                 ha='right',
                 bbox=dict(alpha=0.6, color='white')
             )
-            if '2016' in iatv_corpus_name:
+            if date_range[0].year == 2016:
                 ax.axvline(
                     datetime(2016, 9, 26), ymax=yheight, color='k', zorder=zo
                 )
@@ -144,7 +141,7 @@ def by_network_frequency_figure(
                 ax.text('2016-10-18', 0.2, "#3", **textargs)
                 ax.set_xlim(datetime(2016, 8, 31), datetime(2016, 11, 29))
 
-            if '2012' in iatv_corpus_name:
+            if date_range[0].year == 2012:
                 ax.axvline(
                     datetime(2012, 10, 3), ymax=yheight, color='k', zorder=zo
                 )
