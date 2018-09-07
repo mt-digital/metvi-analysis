@@ -70,6 +70,7 @@ def partition_AICs(df,
     for first_date, last_date in candidate_excited_date_pairs:
 
         phase_df = add_phases(df, first_date, last_date)
+        phase_df.freq = pd.to_numeric(phase_df.freq)
 
         # If there are not two states (ground and excited), don't model.
         # This happens when neither first or last is in the df.date column
@@ -449,6 +450,8 @@ def _get_excited(counts_df, network_id, partition_infos,
 
 def fit_all_networks(project_df, date_range,
                      by_network=True, poisson=False, verbose=False):
+
+    project_df = project_df[project_df.include]
 
     # The first date of date_range can't be the last excited state date.
     last_excited_date_candidates = date_range[1:]

@@ -8,9 +8,6 @@ from copy import deepcopy
 from datetime import datetime, timedelta
 from urllib.parse import urlparse
 
-from .export_project import ProjectExporter
-from metacorps.app.models import IatvCorpus
-
 
 DEFAULT_FACET_WORDS = [
     'attack',
@@ -35,21 +32,21 @@ def get_project_data_frame(project_name):
     all Project names in the metacorps database.
 
     Arguments:
-        project_name (str): name of project to be exported to an Analyzer
-            with DataFrame representation included as an attribute
-    '''
-    if type(project_name) is int:
-        project_name = str('Viomet Sep-Nov ' + str(project_name))
+        project_name (str): Identifier for building a dataframe. It could be
+            a year corresponding to either Viomet study year (even though this
+            is in projects/common), a URL or local path to an exported .csv
+            file. Must be made first by giving the name of the IatvCorpus
+            collection in MongoDB to the ProjectExporter (this directory).
 
+    Returns:
+        (pandas.DataFrame): ready for use in analyses
+    '''
     def is_url(s): return urlparse(project_name).hostname is not None
 
     if is_url(project_name) or os.path.exists(project_name):
         ret = pd.read_csv(project_name, na_values='',
                           parse_dates=['start_localtime'])
         return ret
-
-
-    return ProjectExporter(project_name).export_dataframe()
 
 
 def _select_range_and_pivot_subj_obj(date_range, counts_df, subj_obj):
@@ -229,11 +226,14 @@ def daily_metaphor_counts(project_df, date_index, by=None):
 
     counts = _count_by_start_localtime(project_df, column_list=by)
 
-    groupby_spec = [counts.start_localtime.dt.date, *counts[by]]
+    counts = counts.rename(columns={'start_localtime': 'date'})
+    counts.date = counts.date.dt.date
+
+    groupby_spec = ['date'] + by
 
     counts_gb = counts.groupby(groupby_spec).sum().reset_index()
 
-    ret = pd.pivot_table(counts_gb, index='start_localtime', values='counts',
+    ret = pd.pivot_table(counts_gb, index='date', values='counts',
                          columns=by, aggfunc='sum').fillna(0)
 
     return ret
@@ -260,105 +260,6 @@ def daily_frequency(project_df, date_index, by=None):
         ret = daily.div(spd, axis='rows')
 
     return ret
-
-
-class SubjectObjectData:
-    '''
-    Container for timeseries of instances of a specified subject, object, or
-    subject-object pair. For example, we may look for all instances where
-    Donald Trump is the subject of metaphorical violence, irrespective of the
-    object. We also may want to see where he is the object, no matter who
-    is the subject. Or, we may want to search for pairs, say, all instances
-    where Hillary Clinton is the subject of metaphorical violence and
-    Donald Trump is the object of metaphorical violence, or vice-versa.
-
-    from_analyzer_df is currently the most likely constructor to be used
-    '''
-
-    def __init__(self, data_frame, subj, obj, partition_infos=None):
-        self.data_frame = data_frame
-        self.subject = subj
-        self.object = obj
-        self.partition_infos = partition_infos
-        self.partition_data_frame = None
-
-    @classmethod
-    def from_analyzer_df(cls, analyzer_df, subj=None, obj=None,
-                         subj_contains=True, obj_contains=True,
-                         date_range=None):
-        '''
-        Given an Analyzer instance's DataFrame, calculate the frequency of
-        metaphorical violence with a given subject, object,
-        or a subject-object pair.
-
-        Returns:
-            (SubjectObjectData) an initialized class. The data_frame attribute
-            will be filled with by-network counts of the specified subj/obj
-            configuration.
-        '''
-
-        if date_range is None:
-            pd.date_range('2016-09-01', '2016-11-30', freq='D')
-
-        pre = analyzer_df.fillna('')
-
-        def _match_checker(df, subj, obj, subj_contains, obj_contains):
-            '''
-            Returns list of booleans for selecting subject and object matches
-            '''
-
-            if subj is None and obj is None:
-                raise RuntimeError('subj and obj cannot both be None')
-
-            if subj is not None:
-                if subj_contains:
-                    retSubj = list(df.subjects.str.contains(subj))
-                else:
-                    retSubj = list(df.subjects == subj)
-
-                if obj is None:
-                    ret = retSubj
-
-            # TODO could probably combine these, but now not clear how
-            if obj is not None:
-                if obj_contains:
-                    retObj = list(df.objects.str.contains(obj))
-                else:
-                    retObj = list(df.objects == obj)
-
-                if subj is None:
-                    ret = retObj
-                else:
-                    ret = [rs and ro for rs, ro in zip(retSubj, retObj)]
-
-            return ret
-
-        chooser = _match_checker(pre, subj, obj, subj_contains, obj_contains)
-
-        pre = pre[
-            chooser
-        ]
-
-        # then do counts or frequencies as normal, since you have just
-        # subset the relevant rows.
-        counts_df = pd.DataFrame(
-            index=date_range, data=0.0,
-            columns=pd.Index(['MSNBCW', 'CNNW', 'FOXNEWSW'], name='network')
-        )
-
-        # there might be columns missing, so we have to insert into above zeros
-        to_insert_df = daily_metaphor_counts(pre, date_range, by=['network'])
-
-        for network in ['MSNBCW', 'CNNW', 'FOXNEWSW']:
-            if network in to_insert_df.columns:
-                for row in to_insert_df.itertuples():
-                    counts_df.loc[row.Index][network] = \
-                            row.__getattribute__(network)
-
-        return cls(counts_df, subj, obj)
-
-    def partition(self, partition_infos):
-        pass
 
 
 def facet_word_count(analyzer_df, facet_word_index, by_network=True):

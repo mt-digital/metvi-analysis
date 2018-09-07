@@ -16,7 +16,8 @@ from scipy.stats import pearsonr, linregress
 
 os.environ['CONFIG_FILE'] = 'conf/default.cfg'
 
-from metacorps.app.models import IatvCorpus
+from projects.common import get_project_data_frame
+from projects.common.analysis import daily_frequency
 
 
 METAPHORS_URL_TEMPLATE = \
@@ -27,9 +28,6 @@ def date_range(year):
     return pd.date_range(
         datetime.date(year, 9, 1), datetime.date(year, 11, 30), freq='D'
     )
-
-def iatv_corpus_name(year):
-    return 'Viomet Sep-Nov {}'.format(year)
 
 NETWORKS = ['MSNBC', 'CNN', 'Fox News']
 
@@ -288,7 +286,7 @@ def get_subj_ts(df, subj, year=2016):
     # If we have na at this step it's due to dividing by zero counts.
     # See daily_frequency for more.
     return daily_frequency(
-        subj_df, date_range(year), iatv_corpus_name(year), by=['subjects'], predropna=True
+        subj_df, date_range(year), by=['subjects']  #, predropna=True
     )[subj].fillna(0.0)
 
 
@@ -303,7 +301,7 @@ def get_obj_ts(df, obj, year=2016):
 
     # If we have na at this step it's due to dividing by zero counts.
     return daily_frequency(
-        obj_df, date_range(year), iatv_corpus_name(year), by=['objects'], predropna=True
+        obj_df, date_range(year), by=['objects']  # , predropna=True
     )[obj].fillna(0.0)
 
 
@@ -315,21 +313,22 @@ def get_network_ts(df, network, year=2016):
     # XXX daily_frequency by network works somewhat differently, but not
     # too sure how to describe it so...WATCH OUT!
     return daily_frequency(
-        df, date_range(year), iatv_corpus_name(year), by=['network']
+        df, date_range(year), by=['network']
     )[network].dropna()
 
 
-def correlate_data(year=2016, save_dir=None):
+def data_for_model(year=2016, save_dir=None):
     '''
     Create a dataframe with all series needed to make regressions of
     faceted MV frequencies.
     '''
     # Create metaphorical violence frequency series across all networks.
-    url = METAPHORS_URL_TEMPLATE.format(year)
-    viomet_df = pd.read_csv(url, na_values='',
-                     parse_dates=['start_localtime'])
-    freq_df = daily_frequency(viomet_df, date_range(year), iatv_corpus_name(year))
-    metvi_ts = pd.Series(index=freq_df.index, data=freq_df['freq'])
+    csv = os.path.join('Data', 'viomet-sep-nov-{}.csv'.format(year))
+    # viomet_df = pd.read_csv(url, na_values='',
+    #                  parse_dates=['start_localtime'])
+    project_df = get_project_data_frame(csv)
+    freq_df = daily_frequency(project_df, date_range(year))
+    metvi_ts = pd.Series(index=freq_df.index, data=freq_df['freq'], dtype=float)
 
     # Create timeseries of tweets.
     if year == 2016:
@@ -342,17 +341,17 @@ def correlate_data(year=2016, save_dir=None):
             metvi_all=metvi_ts,
 
             # Trump as subject or object metvi freq timeseries.
-            metvi_trump_subj=get_subj_ts(viomet_df, 'Donald Trump'),
-            metvi_trump_obj=get_obj_ts(viomet_df, 'Donald Trump'),
+            metvi_trump_subj=get_subj_ts(project_df, 'Donald Trump'),
+            metvi_trump_obj=get_obj_ts(project_df, 'Donald Trump'),
 
             # Clinton as subject or object metvi freq timeseries.
-            metvi_clinton_subj=get_subj_ts(viomet_df, 'Hillary Clinton'),
-            metvi_clinton_obj=get_obj_ts(viomet_df, 'Hillary Clinton'),
+            metvi_clinton_subj=get_subj_ts(project_df, 'Hillary Clinton'),
+            metvi_clinton_obj=get_obj_ts(project_df, 'Hillary Clinton'),
 
             # Metvi freq on networks timeseries.
-            metvi_msnbc=get_network_ts(viomet_df, 'MSNBCW'),
-            metvi_cnn=get_network_ts(viomet_df, 'CNNW'),
-            metvi_foxnews=get_network_ts(viomet_df, 'FOXNEWSW')
+            metvi_msnbc=get_network_ts(project_df, 'MSNBCW'),
+            metvi_cnn=get_network_ts(project_df, 'CNNW'),
+            metvi_foxnews=get_network_ts(project_df, 'FOXNEWSW')
         )
     elif year == 2012:
         ts_data = dict(
@@ -364,215 +363,17 @@ def correlate_data(year=2016, save_dir=None):
             metvi_all=metvi_ts,
 
             # Trump as subject or object metvi freq timeseries.
-            metvi_romney_subj=get_subj_ts(viomet_df, 'Mitt Romney', year=2012),
-            metvi_romney_obj=get_obj_ts(viomet_df, 'Mitt Romney', year=2012),
+            metvi_romney_subj=get_subj_ts(project_df, 'Mitt Romney', year=2012),
+            metvi_romney_obj=get_obj_ts(project_df, 'Mitt Romney', year=2012),
 
             # Clinton as subject or object metvi freq timeseries.
-            metvi_obama_subj=get_subj_ts(viomet_df, 'Barack Obama', year=2012),
-            metvi_obama_obj=get_obj_ts(viomet_df, 'Barack Obama', year=2012),
+            metvi_obama_subj=get_subj_ts(project_df, 'Barack Obama', year=2012),
+            metvi_obama_obj=get_obj_ts(project_df, 'Barack Obama', year=2012),
 
             # Metvi freq on networks timeseries.
-            metvi_msnbc=get_network_ts(viomet_df, 'MSNBCW', year=2012),
-            metvi_cnn=get_network_ts(viomet_df, 'CNNW', year=2012),
-            metvi_foxnews=get_network_ts(viomet_df, 'FOXNEWSW', year=2012)
+            metvi_msnbc=get_network_ts(project_df, 'MSNBCW', year=2012),
+            metvi_cnn=get_network_ts(project_df, 'CNNW', year=2012),
+            metvi_foxnews=get_network_ts(project_df, 'FOXNEWSW', year=2012)
         )
 
     return pd.DataFrame(ts_data)
-
-
-def daily_frequency(df, date_index, iatv_corpus, by=None, predropna=False):
-
-    if by is not None and 'network' in by:
-        spd = shows_per_date(date_index, iatv_corpus, by_network=True)
-        if predropna:
-            spd = spd.dropna()
-            daily = daily_metaphor_counts(df, date_index, by=by)
-        else:
-            daily = daily_metaphor_counts(df, date_index, by=by)
-
-        ret = daily.div(spd, axis='rows')
-
-    elif by is None:
-        spd = shows_per_date(date_index, iatv_corpus)
-        if predropna:
-            spd = spd.dropna()
-            daily = daily_metaphor_counts(df, date_index, by=by)
-        else:
-            daily = daily_metaphor_counts(df, date_index, by=by)
-
-        ret = daily.div(spd, axis='rows')
-        ret.columns = ['freq']
-
-    else:
-        spd = shows_per_date(date_index, iatv_corpus)
-        if predropna:
-            spd = spd.dropna()
-            daily = daily_metaphor_counts(df, date_index, by=by)
-        else:
-            daily = daily_metaphor_counts(df, date_index, by=by)
-
-        ret = daily.div(spd, axis='rows')
-
-    return ret
-
-
-def _get_prog_date(doc):
-    '''
-    If the hour of broadcast is in the early morning it is a re-run
-    from previous day
-    '''
-    if type(doc) is pd.Timestamp:
-        slt = doc
-        d = slt.date()
-    else:
-        slt = doc.start_localtime
-        d = slt.date()
-
-    if slt.hour < 8:
-        d -= datetime.timedelta(days=1)
-
-    return d
-
-
-def shows_per_date(date_index, iatv_corpus, by_network=False):
-    '''
-    Arguments:
-        date_index (pandas.DatetimeIndex): Full index of dates covered by
-            data
-        iatv_corpus (app.models.IatvCorpus): Obtained, e.g., using
-            `iatv_corpus = IatvCorpus.objects.get(name='Viomet Sep-Nov 2016')`
-        by_network (bool): whether or not to do a faceted daily count
-            by network
-
-    Returns:
-        (pandas.Series) if by_network is False, (pandas.DataFrame)
-            if by_network is true.
-    '''
-    if type(iatv_corpus) is str:
-        iatv_corpus = IatvCorpus.objects(name=iatv_corpus)[0]
-
-    docs = iatv_corpus.documents
-
-    n_dates = len(date_index)
-    if not by_network:
-
-        # get all date/show name tuples & remove show re-runs from same date
-        prog_dates = set(
-            [
-                (d.program_name, _get_prog_date(d))
-                for d in docs
-            ]
-        )
-
-        # count total number of shows on each date
-        # note we count the second entry of the tuples, which is just the
-        # date, excluding program name
-        year = list(prog_dates)[0][1].year
-        shows_per_date = Counter(el[1] for el in prog_dates
-                                 if el[1] > datetime.date(year, 8, 31))
-
-        spd_series = pd.Series(
-            index=date_index,
-            data={'counts': np.zeros(n_dates)}
-        ).sort_index()
-
-
-        try:
-            for date in shows_per_date:
-                spd_series.loc[date] = shows_per_date[date]
-        except:
-            import ipdb
-            ipdb.set_trace()
-
-        return spd_series
-
-    else:
-        # get all date/network/show name tuples
-        # & remove show re-runs from same date
-        prog_dates = set(
-            [
-                (d.program_name, d.network, _get_prog_date(d))
-                for d in docs
-            ]
-        )
-
-        # count total number of shows on each date for each network
-        # note we count the second entry of the tuples, which is just the
-        # date, excluding program name
-        year = list(prog_dates)[0][2].year
-        shows_per_network_per_date = Counter(
-            el[1:] for el in prog_dates if el[2] > datetime.date(year, 8, 31)
-        )
-
-        n_dates = len(date_index)
-        spd_frame = pd.DataFrame(
-            index=date_index,
-            columns=['MSNBCW', 'CNNW', 'FOXNEWSW']
-        )
-
-        for tup in shows_per_network_per_date:
-            spd_frame.loc[tup[1]][tup[0]] = shows_per_network_per_date[tup]
-
-        return spd_frame
-
-
-def daily_metaphor_counts(df, date_index, by=None):
-    '''
-    Given an Analyzer.df, creates a pivot table with date_index as index. Will
-    group by the column names given in by. First deals with hourly data in
-    order to build a common index with hourly data, which is the data's
-    original format.
-
-    Arguments:
-        df (pandas.DataFrame)
-        by (list(str))
-        date_index (pandas.core.indexes.datetimes.DatetimeIndex): e.g.
-            `pd.date_range('2016-09-01', '2016-11-30', freq='D')`
-    '''
-    # get initial counts by localtime
-    if by is None:
-        by = []
-
-    counts = _count_by_start_localtime(df, column_list=by)
-
-    # groupby_spec = [counts.start_localtime.dt.date, *counts[by]]
-    groupby_spec = [
-        pd.Series([_get_prog_date(d) for d in counts.start_localtime], name='start_localtime'),
-        *counts[by]
-    ]
-
-    counts_gb = counts.groupby(groupby_spec).sum().reset_index()
-
-    ret = pd.pivot_table(counts_gb, index='start_localtime', values='counts',
-                         columns=by, aggfunc='sum').fillna(0)
-
-    return ret
-
-
-def _count_by_start_localtime(df,
-                              column_list=['program_name',
-                                           'network',
-                                           'facet_word']):
-    '''
-    Count the number of instances grouped by column_list. Adds a 'counts'
-    column.
-
-    Arguments:
-        df (pandas.DataFrame): Analyzer.df attribute from Analyzer class
-        column_list (list): list of columns on which to groupby then count
-
-    Returns:
-        (pandas.DataFrame) counts per start_localtime of tuples with types
-            given in column_list
-    '''
-    all_cols = ['start_localtime'] + column_list
-
-    subs = df[all_cols]
-
-    c = subs.groupby(all_cols).size()
-
-    ret_df = c.to_frame()
-    ret_df.columns = ['counts']
-    ret_df.reset_index(inplace=True)
-
-    return ret_df

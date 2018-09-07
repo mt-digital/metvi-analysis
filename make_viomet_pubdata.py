@@ -18,8 +18,8 @@ from projects.viomet.analysis import (
 from projects.viomet.vis import by_network_frequency_figure
 
 # YEARS = [2012, 2016]
-# YEARS = [2016]
-YEARS = [2012]
+YEARS = [2016]
+# YEARS = [2012]
 
 FORMATTERS = {
     '$f^{(1)}$': '{:,.2f}'.format,
@@ -40,6 +40,7 @@ for year in YEARS:
     project_df = project_df[
         project_df['facet_word'].isin(['hit', 'attack', 'beat'])
     ]
+    project_df = project_df[project_df.include]
     date_range = pd.date_range(
         str(year) + '-9-1', str(year) + '-11-30', freq='D'
     )
