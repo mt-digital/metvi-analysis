@@ -11,6 +11,7 @@ import pandas as pd
 import seaborn as sns
 
 from collections import Counter
+from datetime import datetime as DATETIME
 from os.path import join as osjoin
 from scipy.stats import pearsonr, linregress
 
@@ -317,6 +318,23 @@ def get_network_ts(df, network, year=2016):
     )[network].dropna()
 
 
+DEBATE_DATES = {
+    2012: np.array(['2012-10-03', '2012-10-16', '2012-10-22'],
+                     dtype='datetime64[D]'),
+    2016: np.array(['2016-09-26', '2016-10-09', '2016-10-19'],
+                     dtype='datetime64[D]')
+}
+
+
+def _days_from_debate(year, dates):
+
+    debate_dates = DEBATE_DATES[year]
+    sy = str(year)
+    dates = np.array(dates, dtype='datetime64[D]')
+    # dates = np.arange(sy + '-09-01', sy + '-11-30', dtype='datetime64[D]')
+    days_from_debates = np.array([date - debate_dates for date in dates])
+    return np.absolute(days_from_debates).min(axis=1).astype(int)
+
 def data_for_model(year=2016, save_dir=None):
     '''
     Create a dataframe with all series needed to make regressions of
@@ -330,9 +348,14 @@ def data_for_model(year=2016, save_dir=None):
     freq_df = daily_frequency(project_df, date_range(year))
     metvi_ts = pd.Series(index=freq_df.index, data=freq_df['freq'], dtype=float)
 
+    days_from_debate = _days_from_debate(year, freq_df.index)
+
     # Create timeseries of tweets.
     if year == 2016:
         ts_data = dict(
+            # Number of days before or after debate.
+            days_from_debate=days_from_debate,
+
             # Twitter timeseries.
             trump=get_tweets_ts('trump'),
             clinton=get_tweets_ts('clinton'),
@@ -355,6 +378,8 @@ def data_for_model(year=2016, save_dir=None):
         )
     elif year == 2012:
         ts_data = dict(
+            # Number of days before or after debate.
+            days_from_debate=days_from_debate,
             # Twitter timeseries.
             romney=get_tweets_ts('romney', year=2012),
             obama=get_tweets_ts('obama', year=2012),
