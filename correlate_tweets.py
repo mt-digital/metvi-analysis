@@ -68,13 +68,6 @@ def get_tweets_ts(candidate, year=2016):
     return tweets_ts
 
 
-def get_project_dataframe(url=METAPHORS_URL_TEMPLATE.format(2016)):
-
-    return pd.read_csv(
-        url, na_values='', parse_dates=['start_localtime']
-    )
-
-
 def plot_regressions(ts_df, by='all', year=2016, save_path=None):
     '''
     Arguments:
@@ -92,7 +85,6 @@ def plot_regressions(ts_df, by='all', year=2016, save_path=None):
 
     # Plot All MV Use against Trump/Clinton tweeting.
     if by == 'all':
-
         def annotate(x, y, axidx):
             axes[axidx].text(
                 6.0, 6.25, 'r={:.2f}; p={:.5f}'.format(*pearsonr(x, y)),
@@ -345,6 +337,7 @@ def data_for_model(year=2016, save_dir=None):
     # viomet_df = pd.read_csv(url, na_values='',
     #                  parse_dates=['start_localtime'])
     project_df = get_project_data_frame(csv)
+    project_df = project_df[project_df.include]
     freq_df = daily_frequency(project_df, date_range(year))
     metvi_ts = pd.Series(index=freq_df.index, data=freq_df['freq'], dtype=float)
 

@@ -207,7 +207,7 @@ def shows_per_date(project_df, date_index, by_network=False):
         return spd_frame
 
 
-def daily_metaphor_counts(project_df, date_index, by=None):
+def daily_metaphor_counts(project_df, date_index, by=None, pivot=True):
     '''
     Given an Analyzer.df, creates a pivot table with date_index as index. Will
     group by the column names given in by. First deals with hourly data in
@@ -231,11 +231,12 @@ def daily_metaphor_counts(project_df, date_index, by=None):
 
     groupby_spec = ['date'] + by
 
-    counts_gb = counts.groupby(groupby_spec).sum().reset_index()
-
-    ret = pd.pivot_table(counts_gb, index='date', values='counts',
-                         columns=by, aggfunc='sum').fillna(0)
-
+    ret = counts.groupby(groupby_spec).sum().reset_index()
+    if pivot:
+        ret = pd.pivot_table(ret, index='date', values='counts',
+                             columns=by, aggfunc='sum').fillna(0)
+    # import ipdb
+    # ipdb.set_trace()
     return ret
 
 
