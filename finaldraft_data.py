@@ -12,6 +12,7 @@ import pandas as pd
 from datetime import datetime, date, timedelta
 
 from metacorps.app.models import IatvDocument
+from correlate_tweets import get_tweets_ts
 # from projects.common.export_project import ProjectExporter
 
 
@@ -198,6 +199,96 @@ class Dataset:
             self.final_df = final_df
 
         return final_df
+
+
+def make_subject_object_table(base_df, metvi_df, year=2016):
+    '''
+    base_df has an entry for every date that has at least one show, whether
+    or not there was a violence metaphor observed. The metvi_df has metaphor
+    annotations. For each row of the base_df, look up the number of times the
+    Republican or Democrat candidate was either the subject or object of
+    metaphorical violence, appending four new columns for each combination of
+    grammatical type and political party. Further aggregations, such as
+    resampling by month, are to be done after the four columns are added by
+    calling this function.
+    '''
+    metvi_df['date'] = pd.to_datetime(metvi_df.start_time).dt.date
+
+    if year == 2016:
+        republican = 'Donald Trump'
+        democrat = 'Hillary Clinton'
+    elif year == 2012:
+        republican = 'Mitt Romney'
+        democrat = 'Barack Obama'
+    else:
+        raise ValueError('No data for year ' + str(year))
+
+    def _make_counts(iatv_id, metvi_df):
+
+        # For some reason date_ is sometimes being read as string. My solution
+        # is to lazily do this instead of fixing actual problem...
+        # date_ = pd.to_datetime(date_).date()
+
+        rows = metvi_df[metvi_df.iatv_id == iatv_id]
+
+        repsubj = np.sum(rows.subjects.str.contains(republican))
+        repobj = np.sum(rows.objects.str.contains(republican))
+        demsubj = np.sum(rows.subjects.str.contains(democrat))
+        demobj = np.sum(rows.objects.str.contains(democrat))
+
+        return (repsubj, repobj, demsubj, demobj)
+
+    subjobj_rows = [
+        _make_counts(iatv_id, metvi_df)
+        for iatv_id in base_df.iatv_id
+    ]
+
+    subjobj = pd.DataFrame(
+        data=subjobj_rows, columns=['RepSubj', 'RepObj', 'DemSubj', 'DemObj']
+    )
+
+    full = pd.concat([base_df, subjobj], axis=1, join_axes=[base_df.index])
+
+    # Read date string.
+    full['date'] = pd.to_datetime(full.date)
+    # Create special month column for convenience, I suppose.
+    full['month'] = full.date.dt.month_name()
+    full['date'] = full['date'].map(lambda d: d.date())
+
+    # Calculate number of days before or after temporally-nearest debate.
+    if year == 2016:
+        db_dates = [
+            date(2016, 9, 26), date(2016, 10, 9), date(2016, 10, 19)
+        ]
+    elif year == 2012:
+        db_dates = [
+            date(2012, 10, 3), date(2012, 10, 16), date(2012, 10, 22)
+        ]
+    full['daysFromDebate'] = full.date.map(
+        lambda d:
+            np.min([abs((db_d - d).days) for db_d in db_dates])
+    )
+
+    # Candidate Twitter.
+    if year == 2016:
+        rep = 'Donald Trump'
+        rep_short = 'trump'
+        dem = 'Hillary Clinton'
+        dem_short = 'clinton'
+
+    elif year == 2012:
+        rep = 'Mitt Romney'
+        rep_short = 'romney'
+        dem = 'Barack Obama'
+        dem_short = 'obama'
+
+    rep_ts = get_tweets_ts(rep_short)
+    dem_ts = get_tweets_ts(dem_short)
+
+    full['RepTweets'] = rep_ts[full['date']].values
+    full['DemTweets'] = dem_ts[full['date']].values
+
+    return full
 
 
 def main():

@@ -6,6 +6,73 @@ import statsmodels.formula.api as smf
 from correlate_tweets import data_for_model
 from datetime import datetime
 
+from collections import Counter
+
+def subjobj_barchart(full_df, by='month', save_path=None):
+
+    # First, aggregate over the groupby column.
+    agg_dict = {a: sum for a in ['RepSubj', 'DemSubj', 'RepObj', 'DemObj']}
+    gb = full_df.groupby(by).agg(agg_dict)
+
+    # We need to normalize by the number of episodes aggregated over
+    # for each group (either networks or months).
+    by_vec = full_df[by]
+    by_counts = Counter(by_vec)
+
+    fig, ax = plt.subplots(figsize=(6.25, 3.75))
+
+    if by == 'month':
+        gb.loc['September'] = gb.loc['September'] / by_counts['September']
+        gb.loc['October'] = gb.loc['October'] / by_counts['October']
+        gb.loc['November'] = gb.loc['November'] / by_counts['November']
+        gb = gb.loc[['September', 'October', 'November']]
+        color = ['k', 'r', 'w']
+
+        ax.set_ylim(0, .7)
+
+    elif by == 'network':
+        gb.loc['MSNBCW'] = gb.loc['MSNBCW'] / by_counts['MSNBCW']
+        gb.loc['CNNW'] = gb.loc['CNNW'] / by_counts['CNNW']
+        gb.loc['FOXNEWSW'] = gb.loc['FOXNEWSW'] / by_counts['FOXNEWSW']
+        gb = gb.loc[['MSNBCW', 'CNNW', 'FOXNEWSW']]
+        color = ['w', 'k', 'r']
+        # ax.set_ylim(0, .7)
+
+
+    # import ipdb
+    # ipdb.set_trace()
+    gb.transpose().plot(
+        kind='bar', color=color, ec='k', ax=ax, grid='on', lw=1, zorder=3
+    )
+    # Turn off vertical grid lines.
+    ax.grid(axis='x')
+
+    ax.set_ylabel('Metaphor uses per episode', size=14.5)
+    ax.set_xlabel('\nCandidate party and grammatical type', size=15)
+    print(list(ax.get_yticklabels()))
+    ax.set_xticklabels(
+        ['Republican \nas Subject', 'Democrat \nas Subject',
+         'Republican \nas Object', 'Democrat \nas Object'],
+        size=14,
+        rotation=0
+    )
+
+    # For some reason can't get_yticklabels as I would expect/normally do.
+    ax.set_yticklabels(['0.' + str(i) for i in range(8)], size=12)
+
+    ax.get_legend().set_title(by.title(), prop={'size': 13})
+
+    if save_path is not None:
+        if save_path[-4:] == '.png':
+            plt.savefig(save_path, dpi=300)
+        else:
+            plt.savefig(save_path)
+
+    return ax
+
+
+
+
 
 def fits_plots(tsdata, figsize=(8, 3), logdays=False):
     fig, axes = plt.subplots(1, 3, figsize=figsize)  # , sharey=True)
@@ -22,16 +89,16 @@ def fits_plots(tsdata, figsize=(8, 3), logdays=False):
         res = mod.fit()
         intercept = res.params['Intercept']
         coeff = res.params[col]
-            
+
         x = data[col]
         y = data['metvi_all']
-        
+
         x0 = x.min()
         x1 = x.max()
-        
+
         y0 = intercept + (coeff * x0)
         y1 = intercept + (coeff * x1)
-        
+
         ax = axes[idx]
         ax.plot(x, y, '.')
         ax.plot([x0, x1], [y0, y1], color='r')
