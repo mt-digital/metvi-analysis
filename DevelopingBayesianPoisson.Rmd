@@ -1,0 +1,436 @@
+---
+title: "Building up to Bayesian Poisson regression"
+output: html_notebook
+---
+
+
+# Poisson regression example in Statistical Rethinking Ch 10.2
+
+The Poisson distribution is used to model discrete count data, same as the
+binomial distribution. In our case, we want to understand what causes variation
+in the number of times metaphorical violence is used on the cable news shows
+we observed. Say we wanted to use the binomial distribution to model this. We
+must specify some number of trials, $n$ out of which $p$ events of interest 
+occurred. But number of trials doesn't have a clear meaning in our case, so we
+can't meaningfully set $n$. 
+
+Instead of the two parameters needed to specify a binomial distribution, 
+$n$ and the occurrence rate $r$, one need only specify one parameter, $\lambda$.
+$\lambda$ is both the mean and the standard deviation. The mean of this 
+distribution can be thought of as the rate of occurrence of violence metaphors,
+in our case, or whatever phenomenon of interest. 
+
+SR uses an example of Oceanic peoples' tool complexity to introduce Poisson regression. 
+I will not revisit the details
+of the data or hypotheses, but instead focus on code and how we can modify
+McElreath's example for modeling violence metaphors.
+
+Let's have a quick look at the data.
+
+```{r}
+library(rethinking)
+
+data("Kline")
+
+d <- Kline
+
+print(Kline)
+```
+
+That is all the data. I'm not sure, but I think a loyal frequentist would 
+retreat at this point. But in the Bayesian approach one rigorously formulates their
+statistical model as a translation of their verbal hypothesis, then lets 
+the model and alternative models, representing alternative hypotheses, speak
+for themselves by calculating inferences and predictions based on the model, and
+evaluating those inferences and predictions in a smart, Bayesian way.
+
+## Modeling tool complexity with MAP
+
+Now we fit the model using the Maximum _A Posteriori_ function in McElreath's
+`rethinking` package. The model is linear across three predictors: the
+log of each Oceanic people's population, the amount of intercultural contact that
+group has had, and an interaction term between the two.
+
+
+```{r}
+m10.10 <- map(
+    alist(
+        total_tools ~ dpois( lambda ),
+        log(lambda) <- a + bp*log_pop 
+                         + bc*contact_high 
+                         + bpc*contact_high*log_pop,
+        a ~ dnorm(0, 100),
+        c(bp, bc, bpc) ~ dnorm(0, 1)
+    ),
+    data=d
+)
+```
+
+Inspect the estimates. 
+
+```{r}
+precis(m10.10, corr=TRUE)
+plot(precis(m10.10))
+```
+
+
+We might conclude that population is important, but not contact, and not the
+interaction between contact and population. If you thought that, McElreath says,
+"you'd be wrong." The reason is because of the interaction, which makes things
+more complicated than normal. To evaluate the effect of contact and the interaction,
+we will generate samples from the posterior distribution found with our `map`
+call and compare two "counterfactual", i.e. hypothetical, islands with a 
+log-population of 8 and one with high contact rate and the other with low. 
+
+```{r}
+post <- extract.samples(m10.10)
+lambda_high <- exp( post$a + post$bc + (post$bp + post$bpc)*8 )
+lambda_low  <- exp( post$a + post$bp*8 )
+
+diff <- lambda_high - lambda_low
+sum(diff > 0) / length(diff)
+```
+
+Conventionally, we would say these results are non-significant since the 
+effect size is not sufficiently far from zero with respect to the standard error.
+But this calculation shows that there is "a 95% plausibility that the 
+high-contact island has more tools than the low-contact islands. The uncertainty
+is the marginal uncertainty, not the joint uncertainty, of the coefficient
+estimates. Because of this, one more demonstration against the frequentist
+approach, we use Bayesian model comparisons to see the effects of dropping
+the interaction, contact rate, and log-population, and also drop all three
+for a "null" model with only an intercept. These are in the code block below.
+A comment marks which alternate model is which.
+
+```{r}
+# No interaction.
+
+m10.11 <- map(
+    alist(
+        total_tools ~ dpois(lambda),
+        log(lambda) <- a + bp*log_pop + bc*contact_high,
+        a ~ dnorm(0, 100),
+        c(bp, bc) ~ dnorm(0, 1)
+    ),
+    data=d
+)
+
+
+# No contact rate.
+
+m10.12 <- map(
+    alist(
+        total_tools ~ dpois(lambda),
+        log(lambda) <- a + bp*log_pop,
+        a ~ dnorm(0, 100),
+        bp ~ dnorm(0, 1)
+    ),
+    data=d
+)
+
+
+# No log-population.
+
+m10.13 <- map(
+    alist(
+        total_tools ~ dpois(lambda),
+        log(lambda) <- a + bc*contact_high,
+        a ~ dnorm(0, 100),
+        bc ~ dnorm(0, 1)
+    ),
+    data=d
+)
+
+
+# Intercept-only.
+
+m10.14 <- map(
+    alist(
+        total_tools ~ dpois(lambda),
+        log(lambda) <- a,
+        a ~ dnorm(0, 100)
+    ),
+    data=d
+)
+
+# Compare all models using WAIC estimates and plot comparison.
+islands.compare <- compare(m10.10, m10.11, m10.12, m10.13, m10.14)
+plot(islands.compare)
+```
+
+We will skip generating and plotting predictions sampled from the MAP estimate. 
+We will move on directly to see if we get the same results if we center 
+log-population and use Markov-Chain Monte Carlo to fit the model instead of MAP.
+
+
+
+## MCMC fit
+
+First, we generate a Stan version of the model and fit it. 
+
+
+
+```{r, results='hide'}
+m10.10stan <- map2stan(m10.10, iter=3000, warmup=1000, chains=4)
+precis(m10.10stan)
+```
+
+
+Now we center the predictor and fit the model again
+
+```{r}
+# Construct centered predictor.
+d$log_pop_c <- d$log_pop - mean(d$log_pop)
+
+# Re-estimate.
+m10.10stan.c <- map2stan(
+    alist(
+        total_tools ~ dpois(lambda),
+        log(lambda) <- a + bp*log_pop_c 
+                         + bc*contact_high
+                         + bcp*contact_high*log_pop_c,
+        a ~ dnorm(0, 10),
+        bp ~ dnorm(0, 1),
+        bc ~ dnorm(0, 1),
+        bcp ~ dnorm(0, 1)
+    ),
+    data=d, iter=3000, warmup=1000, chains=4
+)
+```
+
+We can inspect the pairs plot and see less correlation in the errors with the
+centered population than with uncentered:
+
+```{r}
+pairs(m10.10stan, main='Uncentered')
+
+pairs(m10.10stan.c, main='Centered')
+```
+
+
+## Multilevel Poisson (SR 12.4.3) with Overdispersion
+
+The metvi data is certainly overdispersed, meaning the variance is greater than
+the mean, instead of being equal as is the case for the Poisson distribution.
+It is rather trivial to add an overdispersion term. In the SR example we 
+continue here, adding a dispersion term is equivalent to adding a "lower-level"
+focus to the model, with the model given a per-society intercept. Our random
+intercept model becomes
+
+```{r}
+
+d$society <- 1:10
+
+overdispersed <- map2stan(
+    alist(total_tools ~ dpois(mu),
+          log(mu) <- a + a_society[society] + bp*log_pop,
+          a ~ dnorm(0, 10),
+          bp ~ dnorm(0, 1),
+          a_society[society] ~ dnorm(0, sigma_society),
+          sigma_society ~ dcauchy(0, 1)
+
+    ),
+    data=d, iter=4000, chains=3
+)
+```
+
+```{r}
+precis(overdispersed, depth=2)
+```
+
+We can use the `postcheck` function to check posterior predictions that uses
+the varying intercepts directly to generate predictions.
+
+```{r}
+postcheck(overdispersed)
+```
+
+But this ignores the hyperparameter, $\sigma_{\mathrm{\small SOCIETY}}$. Here's how
+to include the hyperparameters and generate a prediction and prediction envelope
+that shades the 97%, 89%, and 67% confidence intervals.
+
+```{r}
+post <- extract.samples(overdispersed)
+d.pred <- list(
+    log_pop = seq(from=6, to=14, length.out=30),
+    society = rep(1, 30)
+)
+
+a_society_sims <- rnorm(20000, 0, post$sigma_society)
+a_society_sims <- matrix(a_society_sims, 2000, 10)
+
+link.overd <- link(overdispersed, n=2000, data=d.pred, 
+                   replace=list(a_society=a_society_sims))
+```
+
+```{r}
+# Plot raw data.
+plot(d$log_pop, d$total_tools, col=rangi2, pch=16,
+     xlab='log pop', ylab='total tools', xlim=c(6.8, 13))
+text(d$log_pop, d$total_tools, d$culture, pos=4)
+
+# Plot posterior median.
+mu.median <- apply(link.overd, 2, median)
+lines(d.pred$log_pop, mu.median)
+
+# Plot 97%, 89%, and 67% intervals
+mu.PI <- apply(link.overd, 2, PI, prob=0.97)
+shade(mu.PI, d.pred$log_pop)
+mu.PI <- apply(link.overd, 2, PI, prob=0.89)
+shade(mu.PI, d.pred$log_pop)
+mu.PI <- apply(link.overd, 2, PI, prob=0.67)
+shade(mu.PI, d.pred$log_pop)
+```
+
+
+## Varying slopes and intercepts
+
+In our study, we want to know not just how the mean varies across programs, we
+we want to know how programs vary in their reactivity to debate proximity to
+evaluate our accompanying hypothesis that Fox News, representing "conservative"
+ideology that is supposed to be culturally more violent than the "progressive"
+ideology. Because each network has two programs, we have a multilevel structure,
+with networks "containing" programs. 
+
+For this part of the analysis I will just adapt McElreath's examples of multilevel
+models with fixed and varying slopes and intercepts. Just using MAP will be
+a new experience. 
+
+```{r}
+library(rethinking)
+library(plyr)
+setwd('~/workspace/metvi-analysis')
+source('R/projectData.R')
+
+d <- project.data('full-final-forstats.csv', TRUE, TRUE)
+head(d)
+d$program_idx <- mapvalues(
+    d$program.name, 
+    from=c("The Last Word With Lawrence O'Donnell",
+           "The O'Reilly Factor",
+           "Erin Burnett OutFront",
+           "The Kelly File",
+           "Anderson Cooper 360",
+           "The Rachel Maddow Show"),
+    to=c(1, 2, 3, 4, 5, 6)
+)
+```
+
+Now let's fit some simple models and compare. Let's see the maximum $n$ that's
+in the data first
+
+```{r}
+max(d$n)
+```
+
+### Null, network and program intercepts, days from fixed slope
+
+```{r}
+# Null, or more accurately, intercept-only.
+m.null <- map(
+    alist(
+        n ~ dpois(lambda),
+        log(lambda) <- a,
+        a ~ dnorm(0, 20)  # probably could use smaller guess for std dev prior
+    ),
+    data=d
+)
+
+m.daysfrom <- map(
+    alist(
+        n ~ dpois(lambda),
+        log(lambda) <- a + bdf*days.from.debate,
+        a ~ dnorm(0, 20),
+        bdf ~ dnorm(0, 1)
+    ),
+    data=d
+)
+
+```
+
+Compute Akaike weights.
+
+```{r}
+compare(m.null, m.daysfrom)
+```
+
+So the best model of the first bunch is a multilevel random intercepts model.
+One more structure we should use is a nested version of the random intercepts
+that accounts for the structure in programs pooling to network level, which 
+then pool to population level. That may also be a contender for next top model.
+
+
+```{r, message=FALSE}
+head(d)
+
+m.programintercepts <- map2stan(
+    alist(
+        n ~ dpois(lambda),
+        log(lambda) <- a[program_idx],
+        a[program_idx] ~ dnorm(a, 5),
+        a ~ dnorm(0, 5)
+    ),
+    data=d, warmup=1e3, iter=4e3, chains=3, cores=3
+)
+```
+
+
+```{r}
+
+
+m.networkintercepts <- map2stan(
+    alist(
+        n ~ dpois(lambda),
+        log(lambda) <- a[network],
+        a[network] ~ dnorm(a, 5),
+        a ~ dnorm(0, 5)
+    ),
+    data=d, warmup=1e3, iter=4e3, chains=3, cores=3
+)
+```
+
+
+
+
+### Multilevel with intercepts and slopes
+
+
+```{r}
+
+m.program.int.slopes <- map2stan(
+    alist(
+        n ~ dpois(lambda),
+        log(lambda) <- a[program_idx] + bp[program_idx]*days.from.debate,
+        a[program_idx] ~ dnorm(a, 5),
+        bp[program_idx] ~ dnorm(0, 5),
+        a ~ dnorm(0, 5)
+    ),
+    data=d, warmup=1e3, iter=4e3, chains=3, cores=3
+)
+```
+
+
+
+
+
+```{r}
+
+m.program.int.slopes.2 <- map2stan(
+    alist(
+        n ~ dpois(lambda),
+        log(lambda) <- a_prog[program_idx] + bdf_prog[program_idx]*days.from.debate,
+        c(a_prog, bdf_prog)[program_idx] ~ dmvnorm2(c(a, bdf), sigma_prog, Rho),
+        a ~ dnorm(0, 5),
+        bdf ~ dnorm(0, 5),
+        sigma_prog ~ dcauchy(0, 0.01),
+        Rho ~ dlkjcorr(2)
+    ),
+    data=d, warmup=1e3, iter=1e4, chains=3, cores=3
+)
+```
+
+```{R}
+precis(m.program.int.slopes.2, depth=2)
+```
+
+

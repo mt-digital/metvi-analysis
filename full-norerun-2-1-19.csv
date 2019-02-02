@@ -1,0 +1,368 @@
+date,network,iatv_id,program_name,n,RepSubj,RepObj,DemSubj,DemObj,month,daysFromDebate
+2016-10-11,MSNBCW,MSNBCW_20161011_020000_The_Last_Word_With_Lawrence_ODonnell,The Last Word With Lawrence O'Donnell,7.0,1,3,3,1,October,2
+2016-11-24,CNNW,CNNW_20161124_000000_Erin_Burnett_OutFront,Erin Burnett OutFront,1.0,0,1,0,0,November,36
+2016-11-12,CNNW,CNNW_20161112_000000_Erin_Burnett_OutFront,Erin Burnett OutFront,0.0,0,0,0,0,November,24
+2016-10-12,MSNBCW,MSNBCW_20161012_020000_The_Last_Word_With_Lawrence_ODonnell,The Last Word With Lawrence O'Donnell,9.0,3,2,1,1,October,3
+2016-09-21,FOXNEWSW,FOXNEWSW_20160921_000000_The_OReilly_Factor,The O'Reilly Factor,2.0,0,1,0,0,September,5
+2016-10-28,CNNW,CNNW_20161028_230000_Erin_Burnett_OutFront,Erin Burnett OutFront,0.0,0,0,0,0,October,9
+2016-10-10,CNNW,CNNW_20161010_230000_Erin_Burnett_OutFront,Erin Burnett OutFront,5.0,2,2,1,1,October,1
+2016-09-13,FOXNEWSW,FOXNEWSW_20160913_000000_The_OReilly_Factor,The O'Reilly Factor,0.0,0,0,0,0,September,13
+2016-09-13,MSNBCW,MSNBCW_20160913_050000_The_Last_Word_With_Lawrence_ODonnell,The Last Word With Lawrence O'Donnell,0.0,0,0,0,0,September,13
+2016-09-19,CNNW,CNNW_20160919_230000_Erin_Burnett_OutFront,Erin Burnett OutFront,0.0,0,0,0,0,September,7
+2016-10-21,MSNBCW,MSNBCW_20161021_050000_The_Last_Word_With_Lawrence_ODonnell,The Last Word With Lawrence O'Donnell,0.0,0,0,0,0,October,2
+2016-09-07,MSNBCW,MSNBCW_20160907_050000_The_Last_Word_With_Lawrence_ODonnell,The Last Word With Lawrence O'Donnell,0.0,0,0,0,0,September,19
+2016-10-19,FOXNEWSW,FOXNEWSW_20161019_030000_The_OReilly_Factor,The O'Reilly Factor,5.0,0,1,0,1,October,0
+2016-11-01,MSNBCW,MSNBCW_20161101_050000_The_Last_Word_With_Lawrence_ODonnell,The Last Word With Lawrence O'Donnell,5.0,1,1,0,0,November,13
+2016-11-05,MSNBCW,MSNBCW_20161105_070000_The_Rachel_Maddow_Show,The Rachel Maddow Show,2.0,0,0,1,0,November,17
+2016-11-15,MSNBCW,MSNBCW_20161115_030000_The_Last_Word_With_Lawrence_ODonnell,The Last Word With Lawrence O'Donnell,2.0,2,0,0,0,November,27
+2016-09-20,FOXNEWSW,FOXNEWSW_20160920_030000_The_OReilly_Factor,The O'Reilly Factor,4.0,0,1,1,0,September,6
+2016-10-13,CNNW,CNNW_20161013_070000_Anderson_Cooper_360,Anderson Cooper 360,0.0,0,0,0,0,October,4
+2016-10-26,FOXNEWSW,FOXNEWSW_20161026_040000_The_Kelly_File,The Kelly File,2.0,1,1,0,0,October,7
+2016-10-27,CNNW,CNNW_20161027_000000_Anderson_Cooper_360,Anderson Cooper 360,0.0,0,0,0,0,October,8
+2016-09-16,MSNBCW,MSNBCW_20160916_080000_The_Rachel_Maddow_Show,The Rachel Maddow Show,1.0,1,0,0,0,September,10
+2016-11-12,MSNBCW,MSNBCW_20161112_030000_The_Last_Word_With_Lawrence_ODonnell,The Last Word With Lawrence O'Donnell,0.0,0,0,0,0,November,24
+2016-10-06,MSNBCW,MSNBCW_20161006_040000_The_Rachel_Maddow_Show,The Rachel Maddow Show,1.0,0,0,0,0,October,3
+2016-11-29,MSNBCW,MSNBCW_20161129_030000_The_Last_Word_With_Lawrence_ODonnell,The Last Word With Lawrence O'Donnell,1.0,1,0,0,0,November,41
+2016-11-01,MSNBCW,MSNBCW_20161101_080000_The_Rachel_Maddow_Show,The Rachel Maddow Show,1.0,0,0,0,0,November,13
+2016-10-18,CNNW,CNNW_20161018_230000_Erin_Burnett_OutFront,Erin Burnett OutFront,3.0,2,1,0,1,October,1
+2016-09-06,CNNW,CNNW_20160906_230000_Erin_Burnett_OutFront,Erin Burnett OutFront,3.0,2,1,1,1,September,20
+2016-10-20,FOXNEWSW,FOXNEWSW_20161020_000000_The_OReilly_Factor,The O'Reilly Factor,4.0,3,0,1,4,October,1
+2016-11-30,MSNBCW,MSNBCW_20161130_020000_The_Rachel_Maddow_Show,The Rachel Maddow Show,0.0,0,0,0,0,November,42
+2016-11-10,CNNW,CNNW_20161110_000000_Erin_Burnett_OutFront,Erin Burnett OutFront,0.0,0,0,0,0,November,22
+2016-11-03,CNNW,CNNW_20161103_230000_Erin_Burnett_OutFront,Erin Burnett OutFront,8.0,2,2,1,0,November,15
+2016-10-25,FOXNEWSW,FOXNEWSW_20161025_000000_The_OReilly_Factor,The O'Reilly Factor,2.0,1,0,0,0,October,6
+2016-10-18,FOXNEWSW,FOXNEWSW_20161018_040000_The_Kelly_File,The Kelly File,0.0,0,0,0,0,October,1
+2016-09-20,CNNW,CNNW_20160920_230000_Erin_Burnett_OutFront,Erin Burnett OutFront,0.0,0,0,0,0,September,6
+2016-10-04,MSNBCW,MSNBCW_20161004_010000_The_Rachel_Maddow_Show,The Rachel Maddow Show,1.0,1,0,0,0,October,5
+2016-09-29,MSNBCW,MSNBCW_20160929_080000_The_Rachel_Maddow_Show,The Rachel Maddow Show,1.0,0,1,1,0,September,3
+2016-09-28,CNNW,CNNW_20160928_230000_Erin_Burnett_OutFront,Erin Burnett OutFront,6.0,3,2,0,2,September,2
+2016-09-10,CNNW,CNNW_20160910_010000_Anderson_Cooper_360,Anderson Cooper 360,0.0,0,0,0,0,September,16
+2016-10-24,CNNW,CNNW_20161024_230000_Erin_Burnett_OutFront,Erin Burnett OutFront,3.0,3,0,0,0,October,5
+2016-10-18,FOXNEWSW,FOXNEWSW_20161018_030000_The_OReilly_Factor,The O'Reilly Factor,6.0,1,1,1,1,October,1
+2016-11-07,MSNBCW,MSNBCW_20161107_060000_The_Last_Word_With_Lawrence_ODonnell,The Last Word With Lawrence O'Donnell,0.0,0,0,0,0,November,19
+2016-11-15,FOXNEWSW,FOXNEWSW_20161115_090000_The_Kelly_File,The Kelly File,0.0,0,0,0,0,November,27
+2016-10-15,MSNBCW,MSNBCW_20161015_020000_The_Last_Word_With_Lawrence_ODonnell,The Last Word With Lawrence O'Donnell,4.0,2,2,0,0,October,4
+2016-09-29,FOXNEWSW,FOXNEWSW_20160929_040000_The_Kelly_File,The Kelly File,13.0,7,3,3,4,September,3
+2016-11-29,FOXNEWSW,FOXNEWSW_20161129_010000_The_OReilly_Factor,The O'Reilly Factor,0.0,0,0,0,0,November,41
+2016-10-25,CNNW,CNNW_20161025_230000_Erin_Burnett_OutFront,Erin Burnett OutFront,4.0,1,1,1,1,October,6
+2016-09-09,CNNW,CNNW_20160909_000000_Anderson_Cooper_360,Anderson Cooper 360,0.0,0,0,0,0,September,17
+2016-10-22,FOXNEWSW,FOXNEWSW_20161022_030000_The_OReilly_Factor,The O'Reilly Factor,3.0,0,2,0,0,October,3
+2016-09-14,MSNBCW,MSNBCW_20160914_040000_The_Rachel_Maddow_Show,The Rachel Maddow Show,0.0,0,0,0,0,September,12
+2016-10-22,MSNBCW,MSNBCW_20161022_010000_The_Rachel_Maddow_Show,The Rachel Maddow Show,1.0,0,0,0,0,October,3
+2016-11-05,FOXNEWSW,FOXNEWSW_20161105_030000_The_OReilly_Factor,The O'Reilly Factor,5.0,3,0,0,1,November,17
+2016-09-21,MSNBCW,MSNBCW_20160921_080000_The_Last_Word_With_Lawrence_ODonnell,The Last Word With Lawrence O'Donnell,0.0,0,0,0,0,September,5
+2016-10-11,CNNW,CNNW_20161011_230000_Erin_Burnett_OutFront,Erin Burnett OutFront,2.0,2,0,0,0,October,2
+2016-10-01,MSNBCW,MSNBCW_20161001_100000_The_Rachel_Maddow_Show,The Rachel Maddow Show,5.0,3,1,1,1,October,5
+2016-11-12,FOXNEWSW,FOXNEWSW_20161112_090000_The_Kelly_File,The Kelly File,0.0,0,0,0,0,November,24
+2016-09-01,CNNW,CNNW_20160901_230000_Erin_Burnett_OutFront,Erin Burnett OutFront,0.0,0,0,0,0,September,25
+2016-10-04,MSNBCW,MSNBCW_20161004_020000_The_Last_Word_With_Lawrence_ODonnell,The Last Word With Lawrence O'Donnell,0.0,0,0,0,0,October,5
+2016-09-03,FOXNEWSW,FOXNEWSW_20160903_030000_The_OReilly_Factor,The O'Reilly Factor,0.0,0,0,0,0,September,23
+2016-10-28,FOXNEWSW,FOXNEWSW_20161028_030000_The_OReilly_Factor,The O'Reilly Factor,1.0,0,0,0,0,October,9
+2016-11-10,MSNBCW,MSNBCW_20161110_020000_The_Rachel_Maddow_Show,The Rachel Maddow Show,1.0,0,0,0,0,November,22
+2016-09-29,CNNW,CNNW_20160929_230000_Erin_Burnett_OutFront,Erin Burnett OutFront,4.0,1,1,1,1,September,3
+2016-11-04,CNNW,CNNW_20161104_230000_Erin_Burnett_OutFront,Erin Burnett OutFront,4.0,0,2,1,0,November,16
+2016-09-02,FOXNEWSW,FOXNEWSW_20160902_000000_The_OReilly_Factor,The O'Reilly Factor,0.0,0,0,0,0,September,24
+2016-09-15,MSNBCW,MSNBCW_20160915_010000_The_Rachel_Maddow_Show,The Rachel Maddow Show,0.0,0,0,0,0,September,11
+2016-11-04,CNNW,CNNW_20161104_000000_Anderson_Cooper_360,Anderson Cooper 360,0.0,0,0,0,0,November,16
+2016-10-25,MSNBCW,MSNBCW_20161025_050000_The_Last_Word_With_Lawrence_ODonnell,The Last Word With Lawrence O'Donnell,4.0,3,1,1,0,October,6
+2016-11-02,FOXNEWSW,FOXNEWSW_20161102_080000_The_Kelly_File,The Kelly File,2.0,0,1,1,0,November,14
+2016-09-17,MSNBCW,MSNBCW_20160917_020000_The_Last_Word_With_Lawrence_ODonnell,The Last Word With Lawrence O'Donnell,2.0,2,0,0,1,September,9
+2016-11-11,FOXNEWSW,FOXNEWSW_20161111_040000_The_OReilly_Factor,The O'Reilly Factor,0.0,0,0,0,0,November,23
+2016-09-10,FOXNEWSW,FOXNEWSW_20160910_000000_The_OReilly_Factor,The O'Reilly Factor,3.0,1,0,0,0,September,16
+2016-11-04,FOXNEWSW,FOXNEWSW_20161104_010000_The_Kelly_File,The Kelly File,2.0,1,1,1,0,November,16
+2016-11-19,CNNW,CNNW_20161119_000000_Erin_Burnett_OutFront,Erin Burnett OutFront,0.0,0,0,0,0,November,31
+2016-10-10,FOXNEWSW,FOXNEWSW_20161010_030000_The_Kelly_File,The Kelly File,10.0,5,1,3,1,October,1
+2016-09-11,FOXNEWSW,FOXNEWSW_20160911_000000_The_OReilly_Factor,The O'Reilly Factor,4.0,2,0,0,1,September,15
+2016-10-04,CNNW,CNNW_20161004_010000_Anderson_Cooper_360,Anderson Cooper 360,0.0,0,0,0,0,October,5
+2016-10-08,FOXNEWSW,FOXNEWSW_20161008_030000_The_OReilly_Factor,The O'Reilly Factor,0.0,0,0,0,0,October,1
+2016-09-08,CNNW,CNNW_20160908_230000_Erin_Burnett_OutFront,Erin Burnett OutFront,1.0,0,0,0,0,September,18
+2016-11-08,MSNBCW,MSNBCW_20161108_050000_The_Rachel_Maddow_Show,The Rachel Maddow Show,0.0,0,0,0,0,November,20
+2016-09-10,MSNBCW,MSNBCW_20160910_020000_The_Last_Word_With_Lawrence_ODonnell,The Last Word With Lawrence O'Donnell,1.0,1,0,0,0,September,16
+2016-10-05,CNNW,CNNW_20161005_230000_Erin_Burnett_OutFront,Erin Burnett OutFront,2.0,1,0,0,0,October,4
+2016-10-31,CNNW,CNNW_20161031_230000_Erin_Burnett_OutFront,Erin Burnett OutFront,1.0,0,0,0,0,October,12
+2016-09-17,MSNBCW,MSNBCW_20160917_100000_The_Rachel_Maddow_Show,The Rachel Maddow Show,0.0,0,0,0,0,September,9
+2016-10-12,FOXNEWSW,FOXNEWSW_20161012_030000_The_OReilly_Factor,The O'Reilly Factor,7.0,5,1,1,1,October,3
+2016-09-16,MSNBCW,MSNBCW_20160916_020000_The_Last_Word_With_Lawrence_ODonnell,The Last Word With Lawrence O'Donnell,3.0,0,1,2,0,September,10
+2016-11-22,FOXNEWSW,FOXNEWSW_20161122_090000_The_Kelly_File,The Kelly File,1.0,0,0,0,0,November,34
+2016-10-13,MSNBCW,MSNBCW_20161013_050000_The_Last_Word_With_Lawrence_ODonnell,The Last Word With Lawrence O'Donnell,1.0,2,0,0,0,October,4
+2016-11-30,CNNW,CNNW_20161130_060000_Anderson_Cooper_360,Anderson Cooper 360,0.0,0,0,0,0,November,42
+2016-09-21,MSNBCW,MSNBCW_20160921_040000_The_Rachel_Maddow_Show,The Rachel Maddow Show,0.0,0,0,0,0,September,5
+2016-09-16,FOXNEWSW,FOXNEWSW_20160916_030000_The_OReilly_Factor,The O'Reilly Factor,1.0,0,1,1,0,September,10
+2016-11-05,FOXNEWSW,FOXNEWSW_20161105_040000_The_Kelly_File,The Kelly File,0.0,0,0,0,0,November,17
+2016-09-08,FOXNEWSW,FOXNEWSW_20160908_080000_The_Kelly_File,The Kelly File,0.0,0,0,0,0,September,18
+2016-11-29,CNNW,CNNW_20161129_000000_Erin_Burnett_OutFront,Erin Burnett OutFront,3.0,0,0,0,0,November,41
+2016-11-11,MSNBCW,MSNBCW_20161111_020000_The_Rachel_Maddow_Show,The Rachel Maddow Show,0.0,0,0,0,0,November,23
+2016-11-01,CNNW,CNNW_20161101_230000_Erin_Burnett_OutFront,Erin Burnett OutFront,3.0,0,1,1,0,November,13
+2016-09-29,CNNW,CNNW_20160929_000000_Anderson_Cooper_360,Anderson Cooper 360,5.0,3,1,0,1,September,3
+2016-11-26,FOXNEWSW,FOXNEWSW_20161126_050000_The_Kelly_File,The Kelly File,0.0,0,0,0,0,November,38
+2016-11-19,CNNW,CNNW_20161119_010000_Anderson_Cooper_360,Anderson Cooper 360,0.0,0,0,0,0,November,31
+2016-09-22,FOXNEWSW,FOXNEWSW_20160922_010000_The_Kelly_File,The Kelly File,0.0,0,0,0,0,September,4
+2016-10-01,FOXNEWSW,FOXNEWSW_20161001_080000_The_Kelly_File,The Kelly File,6.0,5,0,1,2,October,5
+2016-10-21,CNNW,CNNW_20161021_040000_Anderson_Cooper_360,Anderson Cooper 360,0.0,0,0,0,0,October,2
+2016-11-18,FOXNEWSW,FOXNEWSW_20161118_050000_The_Kelly_File,The Kelly File,0.0,0,0,0,0,November,30
+2016-09-21,CNNW,CNNW_20160921_230000_Erin_Burnett_OutFront,Erin Burnett OutFront,0.0,0,0,0,0,September,5
+2016-10-19,MSNBCW,MSNBCW_20161019_050000_The_Last_Word_With_Lawrence_ODonnell,The Last Word With Lawrence O'Donnell,3.0,0,1,0,1,October,0
+2016-11-18,CNNW,CNNW_20161118_010000_Anderson_Cooper_360,Anderson Cooper 360,0.0,0,0,0,0,November,30
+2016-09-01,FOXNEWSW,FOXNEWSW_20160901_010000_The_Kelly_File,The Kelly File,0.0,0,0,0,0,September,25
+2016-09-23,FOXNEWSW,FOXNEWSW_20160923_010000_The_Kelly_File,The Kelly File,0.0,0,0,0,0,September,3
+2016-11-17,CNNW,CNNW_20161117_020000_Anderson_Cooper_360,Anderson Cooper 360,0.0,0,0,0,0,November,29
+2016-10-06,FOXNEWSW,FOXNEWSW_20161006_030000_The_OReilly_Factor,The O'Reilly Factor,8.0,0,2,0,0,October,3
+2016-11-16,FOXNEWSW,FOXNEWSW_20161116_040000_The_OReilly_Factor,The O'Reilly Factor,1.0,0,1,0,0,November,28
+2016-10-21,CNNW,CNNW_20161021_230000_Erin_Burnett_OutFront,Erin Burnett OutFront,3.0,1,1,1,1,October,2
+2016-09-30,MSNBCW,MSNBCW_20160930_020000_The_Last_Word_With_Lawrence_ODonnell,The Last Word With Lawrence O'Donnell,1.0,1,0,0,0,September,4
+2016-10-19,FOXNEWSW,FOXNEWSW_20161019_040000_The_Kelly_File,The Kelly File,6.0,4,1,1,2,October,0
+2016-10-06,CNNW,CNNW_20161006_230000_Erin_Burnett_OutFront,Erin Burnett OutFront,0.0,0,0,0,0,October,3
+2016-10-28,MSNBCW,MSNBCW_20161028_050000_The_Last_Word_With_Lawrence_ODonnell,The Last Word With Lawrence O'Donnell,0.0,0,0,0,0,October,9
+2016-11-18,MSNBCW,MSNBCW_20161118_090000_The_Rachel_Maddow_Show,The Rachel Maddow Show,0.0,0,0,0,0,November,30
+2016-11-17,CNNW,CNNW_20161117_000000_Erin_Burnett_OutFront,Erin Burnett OutFront,0.0,0,0,0,0,November,29
+2016-09-03,MSNBCW,MSNBCW_20160903_100000_The_Rachel_Maddow_Show,The Rachel Maddow Show,3.0,1,0,0,2,September,23
+2016-11-17,FOXNEWSW,FOXNEWSW_20161117_040000_The_OReilly_Factor,The O'Reilly Factor,1.0,0,1,0,0,November,29
+2016-09-24,CNNW,CNNW_20160924_000000_Anderson_Cooper_360,Anderson Cooper 360,0.0,0,0,0,0,September,2
+2016-11-01,FOXNEWSW,FOXNEWSW_20161101_000000_The_OReilly_Factor,The O'Reilly Factor,0.0,0,0,0,0,November,13
+2016-11-10,MSNBCW,MSNBCW_20161110_060000_The_Last_Word_With_Lawrence_ODonnell,The Last Word With Lawrence O'Donnell,1.0,0,0,0,0,November,22
+2016-09-20,MSNBCW,MSNBCW_20160920_050000_The_Last_Word_With_Lawrence_ODonnell,The Last Word With Lawrence O'Donnell,1.0,1,0,0,0,September,6
+2016-10-19,MSNBCW,MSNBCW_20161019_010000_The_Rachel_Maddow_Show,The Rachel Maddow Show,0.0,0,0,0,0,October,0
+2016-11-15,CNNW,CNNW_20161115_000000_Erin_Burnett_OutFront,Erin Burnett OutFront,1.0,0,0,0,0,November,27
+2016-09-15,CNNW,CNNW_20160915_000000_Anderson_Cooper_360,Anderson Cooper 360,0.0,0,0,0,0,September,11
+2016-11-04,MSNBCW,MSNBCW_20161104_020000_The_Last_Word_With_Lawrence_ODonnell,The Last Word With Lawrence O'Donnell,3.0,2,0,1,0,November,16
+2016-09-14,CNNW,CNNW_20160914_000000_Anderson_Cooper_360,Anderson Cooper 360,0.0,0,0,0,0,September,12
+2016-09-13,MSNBCW,MSNBCW_20160913_010000_The_Rachel_Maddow_Show,The Rachel Maddow Show,2.0,0,0,0,0,September,13
+2016-11-23,FOXNEWSW,FOXNEWSW_20161123_010000_The_OReilly_Factor,The O'Reilly Factor,2.0,1,0,0,1,November,35
+2016-10-12,CNNW,CNNW_20161012_010000_Anderson_Cooper_360,Anderson Cooper 360,0.0,0,0,0,0,October,3
+2016-09-28,FOXNEWSW,FOXNEWSW_20160928_030000_The_OReilly_Factor,The O'Reilly Factor,6.0,1,5,6,1,September,2
+2016-11-01,FOXNEWSW,FOXNEWSW_20161101_040000_The_Kelly_File,The Kelly File,2.0,0,0,0,0,November,13
+2016-10-01,MSNBCW,MSNBCW_20161001_050000_The_Last_Word_With_Lawrence_ODonnell,The Last Word With Lawrence O'Donnell,0.0,0,0,0,0,October,5
+2016-11-24,MSNBCW,MSNBCW_20161124_030000_The_Last_Word_With_Lawrence_ODonnell,The Last Word With Lawrence O'Donnell,1.0,0,0,0,0,November,36
+2016-10-20,FOXNEWSW,FOXNEWSW_20161020_030000_The_Kelly_File,The Kelly File,3.0,0,0,1,0,October,1
+2016-11-19,MSNBCW,MSNBCW_20161119_110000_The_Rachel_Maddow_Show,The Rachel Maddow Show,0.0,0,0,0,0,November,31
+2016-11-19,FOXNEWSW,FOXNEWSW_20161119_090000_The_Kelly_File,The Kelly File,0.0,0,0,0,0,November,31
+2016-10-01,FOXNEWSW,FOXNEWSW_20161001_000000_The_OReilly_Factor,The O'Reilly Factor,10.0,2,1,1,2,October,5
+2016-09-10,MSNBCW,MSNBCW_20160910_010000_The_Rachel_Maddow_Show,The Rachel Maddow Show,0.0,0,0,0,0,September,16
+2016-11-17,FOXNEWSW,FOXNEWSW_20161117_020000_The_Kelly_File,The Kelly File,0.0,0,0,0,0,November,29
+2016-10-05,FOXNEWSW,FOXNEWSW_20161005_000000_The_OReilly_Factor,The O'Reilly Factor,8.0,2,0,0,1,October,4
+2016-10-29,FOXNEWSW,FOXNEWSW_20161029_000000_The_OReilly_Factor,The O'Reilly Factor,1.0,0,0,1,0,October,10
+2016-09-15,CNNW,CNNW_20160915_230000_Erin_Burnett_OutFront,Erin Burnett OutFront,1.0,0,0,0,0,September,11
+2016-10-25,CNNW,CNNW_20161025_000000_Anderson_Cooper_360,Anderson Cooper 360,0.0,0,0,0,0,October,6
+2016-09-07,MSNBCW,MSNBCW_20160907_040000_The_Rachel_Maddow_Show,The Rachel Maddow Show,0.0,0,0,0,0,September,19
+2016-10-26,FOXNEWSW,FOXNEWSW_20161026_030000_The_OReilly_Factor,The O'Reilly Factor,1.0,0,0,0,0,October,7
+2016-11-03,FOXNEWSW,FOXNEWSW_20161103_030000_The_OReilly_Factor,The O'Reilly Factor,1.0,1,0,0,0,November,15
+2016-10-22,CNNW,CNNW_20161022_040000_Anderson_Cooper_360,Anderson Cooper 360,0.0,0,0,0,0,October,3
+2016-11-02,FOXNEWSW,FOXNEWSW_20161102_030000_The_OReilly_Factor,The O'Reilly Factor,3.0,0,0,0,1,November,14
+2016-10-21,FOXNEWSW,FOXNEWSW_20161021_040000_The_Kelly_File,The Kelly File,4.0,1,1,2,1,October,2
+2016-10-26,MSNBCW,MSNBCW_20161026_050000_The_Last_Word_With_Lawrence_ODonnell,The Last Word With Lawrence O'Donnell,0.0,0,0,0,0,October,7
+2016-09-21,MSNBCW,MSNBCW_20160921_050000_The_Last_Word_With_Lawrence_ODonnell,The Last Word With Lawrence O'Donnell,0.0,0,0,0,0,September,5
+2016-10-12,CNNW,CNNW_20161012_230000_Erin_Burnett_OutFront,Erin Burnett OutFront,8.0,5,2,0,1,October,3
+2016-10-07,MSNBCW,MSNBCW_20161007_040000_The_Rachel_Maddow_Show,The Rachel Maddow Show,0.0,0,0,0,0,October,2
+2016-11-30,FOXNEWSW,FOXNEWSW_20161130_040000_The_OReilly_Factor,The O'Reilly Factor,1.0,0,0,0,0,November,42
+2016-09-14,MSNBCW,MSNBCW_20160914_050000_The_Last_Word_With_Lawrence_ODonnell,The Last Word With Lawrence O'Donnell,1.0,0,0,1,0,September,12
+2016-11-16,CNNW,CNNW_20161116_000000_Erin_Burnett_OutFront,Erin Burnett OutFront,3.0,1,0,0,0,November,28
+2016-09-03,CNNW,CNNW_20160903_000000_Anderson_Cooper_360,Anderson Cooper 360,2.0,0,0,0,0,September,23
+2016-11-10,FOXNEWSW,FOXNEWSW_20161110_050000_The_Kelly_File,The Kelly File,0.0,0,0,0,0,November,22
+2016-09-26,FOXNEWSW,FOXNEWSW_20160926_060000_The_Kelly_File,The Kelly File,0.0,0,0,0,0,September,0
+2016-09-02,CNNW,CNNW_20160902_230000_Erin_Burnett_OutFront,Erin Burnett OutFront,1.0,1,0,0,1,September,24
+2016-11-12,MSNBCW,MSNBCW_20161112_110000_The_Rachel_Maddow_Show,The Rachel Maddow Show,1.0,0,0,0,0,November,24
+2016-11-22,FOXNEWSW,FOXNEWSW_20161122_040000_The_OReilly_Factor,The O'Reilly Factor,2.0,0,2,1,0,November,34
+2016-11-29,CNNW,CNNW_20161129_050000_Anderson_Cooper_360,Anderson Cooper 360,0.0,0,0,0,0,November,41
+2016-10-17,CNNW,CNNW_20161017_230000_Erin_Burnett_OutFront,Erin Burnett OutFront,3.0,1,2,0,0,October,2
+2016-09-24,MSNBCW,MSNBCW_20160924_010000_The_Rachel_Maddow_Show,The Rachel Maddow Show,0.0,0,0,0,0,September,2
+2016-09-30,MSNBCW,MSNBCW_20160930_040000_The_Rachel_Maddow_Show,The Rachel Maddow Show,0.0,0,0,0,0,September,4
+2016-10-10,FOXNEWSW,FOXNEWSW_20161010_000000_The_OReilly_Factor,The O'Reilly Factor,12.0,8,3,2,0,October,1
+2016-10-27,CNNW,CNNW_20161027_230000_Erin_Burnett_OutFront,Erin Burnett OutFront,5.0,2,1,1,1,October,8
+2016-10-11,FOXNEWSW,FOXNEWSW_20161011_040000_The_Kelly_File,The Kelly File,6.0,1,1,3,0,October,2
+2016-09-02,FOXNEWSW,FOXNEWSW_20160902_010000_The_Kelly_File,The Kelly File,1.0,0,0,0,0,September,24
+2016-11-10,FOXNEWSW,FOXNEWSW_20161110_070000_The_OReilly_Factor,The O'Reilly Factor,3.0,0,0,0,1,November,22
+2016-09-14,FOXNEWSW,FOXNEWSW_20160914_000000_The_OReilly_Factor,The O'Reilly Factor,0.0,0,0,0,0,September,12
+2016-09-13,FOXNEWSW,FOXNEWSW_20160913_040000_The_Kelly_File,The Kelly File,1.0,0,0,1,0,September,13
+2016-11-12,CNNW,CNNW_20161112_010000_Anderson_Cooper_360,Anderson Cooper 360,0.0,0,0,0,0,November,24
+2016-09-02,MSNBCW,MSNBCW_20160902_050000_The_Last_Word_With_Lawrence_ODonnell,The Last Word With Lawrence O'Donnell,1.0,0,1,0,0,September,24
+2016-11-24,MSNBCW,MSNBCW_20161124_020000_The_Rachel_Maddow_Show,The Rachel Maddow Show,0.0,0,0,0,0,November,36
+2016-09-02,CNNW,CNNW_20160902_000000_Anderson_Cooper_360,Anderson Cooper 360,0.0,0,0,0,0,September,24
+2016-11-11,CNNW,CNNW_20161111_020000_Anderson_Cooper_360,Anderson Cooper 360,0.0,0,0,0,0,November,23
+2016-11-17,MSNBCW,MSNBCW_20161117_090000_The_Rachel_Maddow_Show,The Rachel Maddow Show,0.0,0,0,0,0,November,29
+2016-09-01,CNNW,CNNW_20160901_000000_Anderson_Cooper_360,Anderson Cooper 360,0.0,0,0,0,0,September,25
+2016-09-24,MSNBCW,MSNBCW_20160924_050000_The_Last_Word_With_Lawrence_ODonnell,The Last Word With Lawrence O'Donnell,0.0,0,0,0,0,September,2
+2016-10-15,FOXNEWSW,FOXNEWSW_20161015_010000_The_Kelly_File,The Kelly File,0.0,0,0,0,0,October,4
+2016-09-29,FOXNEWSW,FOXNEWSW_20160929_000000_The_OReilly_Factor,The O'Reilly Factor,0.0,0,0,0,0,September,3
+2016-11-15,CNNW,CNNW_20161115_010000_Anderson_Cooper_360,Anderson Cooper 360,0.0,0,0,0,0,November,27
+2016-09-07,CNNW,CNNW_20160907_000000_Anderson_Cooper_360,Anderson Cooper 360,0.0,0,0,0,0,September,19
+2016-10-20,CNNW,CNNW_20161020_230000_Erin_Burnett_OutFront,Erin Burnett OutFront,1.0,0,1,1,0,October,1
+2016-11-23,CNNW,CNNW_20161123_000000_Erin_Burnett_OutFront,Erin Burnett OutFront,1.0,1,0,0,0,November,35
+2016-09-28,MSNBCW,MSNBCW_20160928_050000_The_Last_Word_With_Lawrence_ODonnell,The Last Word With Lawrence O'Donnell,2.0,2,0,0,0,September,2
+2016-09-01,MSNBCW,MSNBCW_20160901_040000_The_Rachel_Maddow_Show,The Rachel Maddow Show,0.0,0,0,0,0,September,25
+2016-09-15,MSNBCW,MSNBCW_20160915_050000_The_Last_Word_With_Lawrence_ODonnell,The Last Word With Lawrence O'Donnell,2.0,1,0,0,1,September,11
+2016-09-14,CNNW,CNNW_20160914_230000_Erin_Burnett_OutFront,Erin Burnett OutFront,2.0,0,0,0,1,September,12
+2016-11-30,CNNW,CNNW_20161130_000000_Erin_Burnett_OutFront,Erin Burnett OutFront,0.0,0,0,0,0,November,42
+2016-11-22,CNNW,CNNW_20161122_020000_Anderson_Cooper_360,Anderson Cooper 360,0.0,0,0,0,0,November,34
+2016-09-28,CNNW,CNNW_20160928_000000_Anderson_Cooper_360,Anderson Cooper 360,0.0,0,0,0,0,September,2
+2016-09-22,CNNW,CNNW_20160922_230000_Erin_Burnett_OutFront,Erin Burnett OutFront,2.0,0,0,0,0,September,4
+2016-09-09,MSNBCW,MSNBCW_20160909_050000_The_Last_Word_With_Lawrence_ODonnell,The Last Word With Lawrence O'Donnell,6.0,2,3,0,0,September,17
+2016-10-06,FOXNEWSW,FOXNEWSW_20161006_080000_The_Kelly_File,The Kelly File,0.0,0,0,0,0,October,3
+2016-09-20,FOXNEWSW,FOXNEWSW_20160920_040000_The_Kelly_File,The Kelly File,1.0,0,1,0,0,September,6
+2016-10-11,CNNW,CNNW_20161011_040000_Anderson_Cooper_360,Anderson Cooper 360,0.0,0,0,0,0,October,2
+2016-11-15,FOXNEWSW,FOXNEWSW_20161115_010000_The_OReilly_Factor,The O'Reilly Factor,0.0,0,0,0,0,November,27
+2016-10-18,CNNW,CNNW_20161018_010000_Anderson_Cooper_360,Anderson Cooper 360,0.0,0,0,0,0,October,1
+2016-09-07,FOXNEWSW,FOXNEWSW_20160907_000000_The_OReilly_Factor,The O'Reilly Factor,2.0,2,0,0,2,September,19
+2016-11-22,MSNBCW,MSNBCW_20161122_050000_The_Rachel_Maddow_Show,The Rachel Maddow Show,0.0,0,0,0,0,November,34
+2016-10-25,FOXNEWSW,FOXNEWSW_20161025_080000_The_Kelly_File,The Kelly File,0.0,0,0,0,0,October,6
+2016-11-23,CNNW,CNNW_20161123_010000_Anderson_Cooper_360,Anderson Cooper 360,0.0,0,0,0,0,November,35
+2016-11-08,CNNW,CNNW_20161108_010000_Anderson_Cooper_360,Anderson Cooper 360,0.0,0,0,0,0,November,20
+2016-09-09,CNNW,CNNW_20160909_230000_Erin_Burnett_OutFront,Erin Burnett OutFront,1.0,0,1,0,0,September,17
+2016-09-10,FOXNEWSW,FOXNEWSW_20160910_010000_The_Kelly_File,The Kelly File,0.0,0,0,0,0,September,16
+2016-10-01,CNNW,CNNW_20161001_010000_Anderson_Cooper_360,Anderson Cooper 360,0.0,0,0,0,0,October,5
+2016-10-13,FOXNEWSW,FOXNEWSW_20161013_000000_The_OReilly_Factor,The O'Reilly Factor,1.0,1,0,0,0,October,4
+2016-09-27,CNNW,CNNW_20160927_230000_Erin_Burnett_OutFront,Erin Burnett OutFront,6.0,2,3,2,0,September,1
+2016-11-23,MSNBCW,MSNBCW_20161123_090000_The_Rachel_Maddow_Show,The Rachel Maddow Show,0.0,0,0,0,0,November,35
+2016-11-19,FOXNEWSW,FOXNEWSW_20161119_010000_The_OReilly_Factor,The O'Reilly Factor,1.0,1,0,0,0,November,31
+2016-09-01,FOXNEWSW,FOXNEWSW_20160901_030000_The_OReilly_Factor,The O'Reilly Factor,0.0,0,0,0,0,September,25
+2016-09-14,FOXNEWSW,FOXNEWSW_20160914_080000_The_Kelly_File,The Kelly File,2.0,0,0,0,1,September,12
+2016-09-08,FOXNEWSW,FOXNEWSW_20160908_000000_The_OReilly_Factor,The O'Reilly Factor,0.0,1,0,0,0,September,18
+2016-10-13,MSNBCW,MSNBCW_20161013_080000_The_Rachel_Maddow_Show,The Rachel Maddow Show,0.0,0,0,0,0,October,4
+2016-11-24,CNNW,CNNW_20161124_020000_Anderson_Cooper_360,Anderson Cooper 360,0.0,0,0,0,0,November,36
+2016-09-27,FOXNEWSW,FOXNEWSW_20160927_030000_The_Kelly_File,The Kelly File,4.0,1,3,2,0,September,1
+2016-11-02,CNNW,CNNW_20161102_230000_Erin_Burnett_OutFront,Erin Burnett OutFront,1.0,1,0,0,1,November,14
+2016-10-08,MSNBCW,MSNBCW_20161008_010000_The_Rachel_Maddow_Show,The Rachel Maddow Show,0.0,0,0,0,0,October,1
+2016-11-03,FOXNEWSW,FOXNEWSW_20161103_010000_The_Kelly_File,The Kelly File,0.0,0,0,0,0,November,15
+2016-10-27,FOXNEWSW,FOXNEWSW_20161027_030000_The_OReilly_Factor,The O'Reilly Factor,2.0,1,2,1,0,October,8
+2016-10-07,MSNBCW,MSNBCW_20161007_020000_The_Last_Word_With_Lawrence_ODonnell,The Last Word With Lawrence O'Donnell,0.0,0,0,0,0,October,2
+2016-10-19,CNNW,CNNW_20161019_010000_Anderson_Cooper_360,Anderson Cooper 360,0.0,0,0,0,0,October,0
+2016-11-18,MSNBCW,MSNBCW_20161118_030000_The_Last_Word_With_Lawrence_ODonnell,The Last Word With Lawrence O'Donnell,1.0,0,0,0,1,November,30
+2016-11-16,CNNW,CNNW_20161116_010000_Anderson_Cooper_360,Anderson Cooper 360,0.0,0,0,0,0,November,28
+2016-11-02,CNNW,CNNW_20161102_000000_Anderson_Cooper_360,Anderson Cooper 360,0.0,0,0,0,0,November,14
+2016-10-27,FOXNEWSW,FOXNEWSW_20161027_010000_The_Kelly_File,The Kelly File,0.0,0,0,0,0,October,8
+2016-09-30,FOXNEWSW,FOXNEWSW_20160930_030000_The_OReilly_Factor,The O'Reilly Factor,2.0,0,0,0,0,September,4
+2016-11-23,MSNBCW,MSNBCW_20161123_030000_The_Last_Word_With_Lawrence_ODonnell,The Last Word With Lawrence O'Donnell,0.0,0,0,0,0,November,35
+2016-11-24,FOXNEWSW,FOXNEWSW_20161124_010000_The_OReilly_Factor,The O'Reilly Factor,1.0,0,1,0,0,November,36
+2016-11-19,MSNBCW,MSNBCW_20161119_060000_The_Last_Word_With_Lawrence_ODonnell,The Last Word With Lawrence O'Donnell,2.0,2,0,0,0,November,31
+2016-09-25,CNNW,CNNW_20160925_230000_Erin_Burnett_OutFront,Erin Burnett OutFront,1.0,0,0,0,0,September,1
+2016-10-16,FOXNEWSW,FOXNEWSW_20161016_030000_The_OReilly_Factor,The O'Reilly Factor,6.0,2,1,2,0,October,3
+2016-09-07,CNNW,CNNW_20160907_230000_Erin_Burnett_OutFront,Erin Burnett OutFront,4.0,3,1,0,1,September,19
+2016-10-14,MSNBCW,MSNBCW_20161014_040000_The_Rachel_Maddow_Show,The Rachel Maddow Show,0.0,0,0,0,0,October,5
+2016-09-27,FOXNEWSW,FOXNEWSW_20160927_000000_The_OReilly_Factor,The O'Reilly Factor,2.0,0,1,1,1,September,1
+2016-09-16,CNNW,CNNW_20160916_010000_Anderson_Cooper_360,Anderson Cooper 360,0.0,0,0,0,0,September,10
+2016-10-08,FOXNEWSW,FOXNEWSW_20161008_040000_The_Kelly_File,The Kelly File,0.0,0,0,0,0,October,1
+2016-09-13,CNNW,CNNW_20160913_000000_Anderson_Cooper_360,Anderson Cooper 360,0.0,0,0,0,0,September,13
+2016-11-15,MSNBCW,MSNBCW_20161115_090000_The_Rachel_Maddow_Show,The Rachel Maddow Show,0.0,0,0,0,0,November,27
+2016-09-23,MSNBCW,MSNBCW_20160923_050000_The_Last_Word_With_Lawrence_ODonnell,The Last Word With Lawrence O'Donnell,0.0,0,0,0,0,September,3
+2016-11-29,FOXNEWSW,FOXNEWSW_20161129_020000_The_Kelly_File,The Kelly File,0.0,0,0,0,0,November,41
+2016-09-05,CNNW,CNNW_20160905_230000_Erin_Burnett_OutFront,Erin Burnett OutFront,2.0,1,0,0,0,September,21
+2016-09-23,CNNW,CNNW_20160923_010000_Anderson_Cooper_360,Anderson Cooper 360,0.0,0,0,0,0,September,3
+2016-09-30,CNNW,CNNW_20160930_230000_Erin_Burnett_OutFront,Erin Burnett OutFront,12.0,6,4,4,1,September,4
+2016-11-26,FOXNEWSW,FOXNEWSW_20161126_040000_The_OReilly_Factor,The O'Reilly Factor,0.0,0,0,0,0,November,38
+2016-09-16,FOXNEWSW,FOXNEWSW_20160916_010000_The_Kelly_File,The Kelly File,0.0,0,0,0,0,September,10
+2016-11-07,FOXNEWSW,FOXNEWSW_20161107_020000_The_Kelly_File,The Kelly File,0.0,0,0,0,0,November,19
+2016-10-27,MSNBCW,MSNBCW_20161027_050000_The_Last_Word_With_Lawrence_ODonnell,The Last Word With Lawrence O'Donnell,1.0,0,1,0,0,October,8
+2016-10-07,FOXNEWSW,FOXNEWSW_20161007_000000_The_OReilly_Factor,The O'Reilly Factor,0.0,0,0,0,0,October,2
+2016-09-16,CNNW,CNNW_20160916_230000_Erin_Burnett_OutFront,Erin Burnett OutFront,3.0,0,3,1,0,September,10
+2016-10-04,FOXNEWSW,FOXNEWSW_20161004_040000_The_Kelly_File,The Kelly File,6.0,0,4,1,1,October,5
+2016-09-22,MSNBCW,MSNBCW_20160922_040000_The_Rachel_Maddow_Show,The Rachel Maddow Show,0.0,0,0,0,0,September,4
+2016-11-06,CNNW,CNNW_20161106_000000_Erin_Burnett_OutFront,Erin Burnett OutFront,0.0,0,0,0,0,November,18
+2016-09-19,FOXNEWSW,FOXNEWSW_20160919_030000_The_OReilly_Factor,The O'Reilly Factor,2.0,0,0,0,0,September,7
+2016-11-08,CNNW,CNNW_20161108_000000_Erin_Burnett_OutFront,Erin Burnett OutFront,4.0,0,2,2,0,November,20
+2016-11-22,CNNW,CNNW_20161122_000000_Erin_Burnett_OutFront,Erin Burnett OutFront,0.0,0,0,0,0,November,34
+2016-09-22,CNNW,CNNW_20160922_000000_Anderson_Cooper_360,Anderson Cooper 360,0.0,0,0,0,0,September,4
+2016-09-17,FOXNEWSW,FOXNEWSW_20160917_030000_The_OReilly_Factor,The O'Reilly Factor,0.0,0,0,0,0,September,9
+2016-11-05,MSNBCW,MSNBCW_20161105_080000_The_Last_Word_With_Lawrence_ODonnell,The Last Word With Lawrence O'Donnell,1.0,0,0,0,0,November,17
+2016-11-16,FOXNEWSW,FOXNEWSW_20161116_090000_The_Kelly_File,The Kelly File,0.0,0,0,0,0,November,28
+2016-10-07,FOXNEWSW,FOXNEWSW_20161007_010000_The_Kelly_File,The Kelly File,0.0,0,0,0,0,October,2
+2016-09-01,MSNBCW,MSNBCW_20160901_020000_The_Last_Word_With_Lawrence_ODonnell,The Last Word With Lawrence O'Donnell,0.0,0,0,0,0,September,25
+2016-10-26,CNNW,CNNW_20161026_230000_Erin_Burnett_OutFront,Erin Burnett OutFront,4.0,2,0,1,1,October,7
+2016-10-06,CNNW,CNNW_20161006_000000_Anderson_Cooper_360,Anderson Cooper 360,0.0,0,0,0,0,October,3
+2016-11-07,FOXNEWSW,FOXNEWSW_20161107_010000_The_OReilly_Factor,The O'Reilly Factor,3.0,2,0,0,1,November,19
+2016-09-23,FOXNEWSW,FOXNEWSW_20160923_000000_The_OReilly_Factor,The O'Reilly Factor,0.0,0,0,0,0,September,3
+2016-10-26,CNNW,CNNW_20161026_000000_Anderson_Cooper_360,Anderson Cooper 360,0.0,0,0,0,0,October,7
+2016-10-21,FOXNEWSW,FOXNEWSW_20161021_000000_The_OReilly_Factor,The O'Reilly Factor,2.0,1,0,0,1,October,2
+2016-09-17,FOXNEWSW,FOXNEWSW_20160917_080000_The_Kelly_File,The Kelly File,0.0,0,0,0,0,September,9
+2016-11-22,MSNBCW,MSNBCW_20161122_060000_The_Last_Word_With_Lawrence_ODonnell,The Last Word With Lawrence O'Donnell,0.0,0,0,0,0,November,34
+2016-11-03,MSNBCW,MSNBCW_20161103_010000_The_Rachel_Maddow_Show,The Rachel Maddow Show,4.0,1,2,3,0,November,15
+2016-09-21,CNNW,CNNW_20160921_000000_Anderson_Cooper_360,Anderson Cooper 360,0.0,0,0,0,0,September,5
+2016-11-07,CNNW,CNNW_20161107_020000_Anderson_Cooper_360,Anderson Cooper 360,0.0,0,0,0,0,November,19
+2016-10-29,MSNBCW,MSNBCW_20161029_020000_The_Last_Word_With_Lawrence_ODonnell,The Last Word With Lawrence O'Donnell,0.0,0,0,0,0,October,10
+2016-11-10,CNNW,CNNW_20161110_020000_Anderson_Cooper_360,Anderson Cooper 360,0.0,0,0,0,0,November,22
+2016-10-29,CNNW,CNNW_20161029_040000_Anderson_Cooper_360,Anderson Cooper 360,0.0,0,0,0,0,October,10
+2016-09-03,FOXNEWSW,FOXNEWSW_20160903_080000_The_Kelly_File,The Kelly File,0.0,0,0,0,0,September,23
+2016-10-29,MSNBCW,MSNBCW_20161029_010000_The_Rachel_Maddow_Show,The Rachel Maddow Show,0.0,0,0,0,0,October,10
+2016-09-09,FOXNEWSW,FOXNEWSW_20160909_040000_The_Kelly_File,The Kelly File,0.0,0,0,0,0,September,17
+2016-10-03,CNNW,CNNW_20161003_230000_Erin_Burnett_OutFront,Erin Burnett OutFront,2.0,0,0,1,1,October,6
+2016-09-08,MSNBCW,MSNBCW_20160908_060000_The_Last_Word_With_Lawrence_ODonnell,The Last Word With Lawrence O'Donnell,0.0,0,0,0,0,September,18
+2016-09-20,MSNBCW,MSNBCW_20160920_080000_The_Rachel_Maddow_Show,The Rachel Maddow Show,0.0,0,0,0,0,September,6
+2016-10-14,FOXNEWSW,FOXNEWSW_20161014_010000_The_Kelly_File,The Kelly File,0.0,0,0,0,0,October,5
+2016-10-06,MSNBCW,MSNBCW_20161006_020000_The_Last_Word_With_Lawrence_ODonnell,The Last Word With Lawrence O'Donnell,1.0,1,0,0,0,October,3
+2016-11-01,CNNW,CNNW_20161101_040000_Anderson_Cooper_360,Anderson Cooper 360,0.0,0,0,0,0,November,13
+2016-10-04,FOXNEWSW,FOXNEWSW_20161004_030000_The_OReilly_Factor,The O'Reilly Factor,10.0,3,4,3,0,October,5
+2016-10-11,MSNBCW,MSNBCW_20161011_010000_The_Rachel_Maddow_Show,The Rachel Maddow Show,1.0,0,0,0,0,October,2
+2016-11-29,MSNBCW,MSNBCW_20161129_050000_The_Rachel_Maddow_Show,The Rachel Maddow Show,1.0,0,0,1,0,November,41
+2016-10-15,FOXNEWSW,FOXNEWSW_20161015_030000_The_OReilly_Factor,The O'Reilly Factor,4.0,2,0,1,0,October,4
+2016-09-21,FOXNEWSW,FOXNEWSW_20160921_080000_The_Kelly_File,The Kelly File,0.0,0,0,0,0,September,5
+2016-11-23,FOXNEWSW,FOXNEWSW_20161123_090000_The_Kelly_File,The Kelly File,0.0,0,0,0,0,November,35
+2016-09-07,FOXNEWSW,FOXNEWSW_20160907_080000_The_Kelly_File,The Kelly File,0.0,0,0,0,0,September,19
+2016-09-24,FOXNEWSW,FOXNEWSW_20160924_030000_The_OReilly_Factor,The O'Reilly Factor,0.0,0,0,0,0,September,2
+2016-09-30,CNNW,CNNW_20160930_000000_Anderson_Cooper_360,Anderson Cooper 360,0.0,0,0,0,0,September,4
+2016-11-11,CNNW,CNNW_20161111_000000_Erin_Burnett_OutFront,Erin Burnett OutFront,0.0,0,0,0,0,November,23
+2016-11-02,MSNBCW,MSNBCW_20161102_020000_The_Last_Word_With_Lawrence_ODonnell,The Last Word With Lawrence O'Donnell,2.0,1,1,0,0,November,14
+2016-10-15,CNNW,CNNW_20161015_010000_Anderson_Cooper_360,Anderson Cooper 360,0.0,0,0,0,0,October,4
+2016-09-30,FOXNEWSW,FOXNEWSW_20160930_040000_The_Kelly_File,The Kelly File,0.0,0,0,0,0,September,4
+2016-09-22,FOXNEWSW,FOXNEWSW_20160922_000000_The_OReilly_Factor,The O'Reilly Factor,3.0,0,3,0,0,September,4
+2016-09-28,FOXNEWSW,FOXNEWSW_20160928_080000_The_Kelly_File,The Kelly File,0.0,0,0,0,0,September,2
+2016-11-30,MSNBCW,MSNBCW_20161130_030000_The_Last_Word_With_Lawrence_ODonnell,The Last Word With Lawrence O'Donnell,3.0,0,0,0,0,November,42
+2016-09-17,CNNW,CNNW_20160917_000000_Anderson_Cooper_360,Anderson Cooper 360,0.0,0,0,0,0,September,9
+2016-10-13,CNNW,CNNW_20161013_230000_Erin_Burnett_OutFront,Erin Burnett OutFront,4.0,2,1,1,0,October,4
+2016-09-08,MSNBCW,MSNBCW_20160908_010000_The_Rachel_Maddow_Show,The Rachel Maddow Show,0.0,0,0,0,0,September,18
+2016-11-04,MSNBCW,MSNBCW_20161104_010000_The_Rachel_Maddow_Show,The Rachel Maddow Show,0.0,0,0,0,0,November,16
+2016-10-26,MSNBCW,MSNBCW_20161026_010000_The_Rachel_Maddow_Show,The Rachel Maddow Show,2.0,0,0,0,0,October,7
+2016-09-29,MSNBCW,MSNBCW_20160929_020000_The_Last_Word_With_Lawrence_ODonnell,The Last Word With Lawrence O'Donnell,2.0,2,0,0,1,September,3
+2016-10-28,MSNBCW,MSNBCW_20161028_010000_The_Rachel_Maddow_Show,The Rachel Maddow Show,0.0,0,0,0,0,October,9
+2016-11-08,MSNBCW,MSNBCW_20161108_030000_The_Last_Word_With_Lawrence_ODonnell,The Last Word With Lawrence O'Donnell,0.0,0,0,0,0,November,20
+2016-09-20,CNNW,CNNW_20160920_000000_Anderson_Cooper_360,Anderson Cooper 360,0.0,0,0,0,0,September,6
+2016-10-13,FOXNEWSW,FOXNEWSW_20161013_010000_The_Kelly_File,The Kelly File,6.0,2,1,0,1,October,4
+2016-10-14,MSNBCW,MSNBCW_20161014_050000_The_Last_Word_With_Lawrence_ODonnell,The Last Word With Lawrence O'Donnell,1.0,1,0,0,0,October,5
+2016-10-22,MSNBCW,MSNBCW_20161022_020000_The_Last_Word_With_Lawrence_ODonnell,The Last Word With Lawrence O'Donnell,0.0,0,0,0,0,October,3
+2016-09-08,CNNW,CNNW_20160908_000000_Anderson_Cooper_360,Anderson Cooper 360,0.0,0,0,0,0,September,18
+2016-09-15,FOXNEWSW,FOXNEWSW_20160915_000000_The_OReilly_Factor,The O'Reilly Factor,1.0,0,1,0,0,September,11
+2016-10-18,MSNBCW,MSNBCW_20161018_080000_The_Rachel_Maddow_Show,The Rachel Maddow Show,0.0,0,0,0,0,October,1
+2016-11-24,FOXNEWSW,FOXNEWSW_20161124_020000_The_Kelly_File,The Kelly File,0.0,0,0,0,0,November,36
+2016-11-02,MSNBCW,MSNBCW_20161102_040000_The_Rachel_Maddow_Show,The Rachel Maddow Show,0.0,0,0,0,0,November,14
+2016-11-30,FOXNEWSW,FOXNEWSW_20161130_050000_The_Kelly_File,The Kelly File,2.0,0,2,0,0,November,42
+2016-10-25,MSNBCW,MSNBCW_20161025_080000_The_Rachel_Maddow_Show,The Rachel Maddow Show,0.0,0,0,0,0,October,6
+2016-11-05,CNNW,CNNW_20161105_010000_Anderson_Cooper_360,Anderson Cooper 360,0.0,0,0,0,0,November,17
+2016-10-14,FOXNEWSW,FOXNEWSW_20161014_000000_The_OReilly_Factor,The O'Reilly Factor,6.0,0,4,0,0,October,5
+2016-10-14,CNNW,CNNW_20161014_230000_Erin_Burnett_OutFront,Erin Burnett OutFront,2.0,1,1,0,0,October,5
+2016-11-16,MSNBCW,MSNBCW_20161116_020000_The_Rachel_Maddow_Show,The Rachel Maddow Show,0.0,0,0,0,0,November,28
+2016-09-09,MSNBCW,MSNBCW_20160909_080000_The_Rachel_Maddow_Show,The Rachel Maddow Show,0.0,0,0,0,0,September,17
+2016-10-21,MSNBCW,MSNBCW_20161021_080000_The_Rachel_Maddow_Show,The Rachel Maddow Show,0.0,0,0,0,0,October,2
+2016-11-11,MSNBCW,MSNBCW_20161111_030000_The_Last_Word_With_Lawrence_ODonnell,The Last Word With Lawrence O'Donnell,0.0,0,0,0,0,November,23
+2016-09-28,MSNBCW,MSNBCW_20160928_040000_The_Rachel_Maddow_Show,The Rachel Maddow Show,0.0,0,0,0,0,September,2
+2016-11-05,CNNW,CNNW_20161105_230000_Erin_Burnett_OutFront,Erin Burnett OutFront,0.0,0,0,0,0,November,17
+2016-11-08,FOXNEWSW,FOXNEWSW_20161108_010000_The_OReilly_Factor,The O'Reilly Factor,0.0,0,0,0,1,November,20
+2016-09-12,CNNW,CNNW_20160912_230000_Erin_Burnett_OutFront,Erin Burnett OutFront,3.0,0,0,0,0,September,14
+2016-10-22,FOXNEWSW,FOXNEWSW_20161022_040000_The_Kelly_File,The Kelly File,0.0,0,0,0,0,October,3
+2016-09-06,FOXNEWSW,FOXNEWSW_20160906_010000_The_Kelly_File,The Kelly File,0.0,0,0,0,0,September,20
+2016-11-11,FOXNEWSW,FOXNEWSW_20161111_090000_The_Kelly_File,The Kelly File,0.0,0,0,0,0,November,23
+2016-10-07,CNNW,CNNW_20161007_000000_Anderson_Cooper_360,Anderson Cooper 360,0.0,0,0,0,0,October,2
+2016-10-12,FOXNEWSW,FOXNEWSW_20161012_040000_The_Kelly_File,The Kelly File,0.0,0,0,0,0,October,3
+2016-09-24,FOXNEWSW,FOXNEWSW_20160924_040000_The_Kelly_File,The Kelly File,0.0,0,0,0,0,September,2
+2016-11-18,CNNW,CNNW_20161118_000000_Erin_Burnett_OutFront,Erin Burnett OutFront,4.0,2,1,0,0,November,30
+2016-09-22,MSNBCW,MSNBCW_20160922_050000_The_Last_Word_With_Lawrence_ODonnell,The Last Word With Lawrence O'Donnell,0.0,0,0,0,0,September,4
+2016-10-08,MSNBCW,MSNBCW_20161008_020000_The_Last_Word_With_Lawrence_ODonnell,The Last Word With Lawrence O'Donnell,2.0,0,0,0,0,October,1
+2016-10-27,MSNBCW,MSNBCW_20161027_080000_The_Rachel_Maddow_Show,The Rachel Maddow Show,0.0,0,0,0,0,October,8
+2016-09-09,FOXNEWSW,FOXNEWSW_20160909_000000_The_OReilly_Factor,The O'Reilly Factor,0.0,0,0,0,0,September,17
+2016-11-17,MSNBCW,MSNBCW_20161117_030000_The_Last_Word_With_Lawrence_ODonnell,The Last Word With Lawrence O'Donnell,1.0,0,0,0,0,November,29
+2016-10-18,MSNBCW,MSNBCW_20161018_050000_The_Last_Word_With_Lawrence_ODonnell,The Last Word With Lawrence O'Donnell,3.0,1,0,0,1,October,1
+2016-10-14,CNNW,CNNW_20161014_000000_Anderson_Cooper_360,Anderson Cooper 360,0.0,0,0,0,0,October,5
+2016-09-15,FOXNEWSW,FOXNEWSW_20160915_010000_The_Kelly_File,The Kelly File,0.0,0,0,0,0,September,11
+2016-10-07,CNNW,CNNW_20161007_230000_Erin_Burnett_OutFront,Erin Burnett OutFront,0.0,0,0,0,0,October,2
+2016-09-23,MSNBCW,MSNBCW_20160923_080000_The_Rachel_Maddow_Show,The Rachel Maddow Show,0.0,0,0,0,0,September,3
+2016-09-13,CNNW,CNNW_20160913_230000_Erin_Burnett_OutFront,Erin Burnett OutFront,4.0,1,2,0,0,September,13
+2016-10-28,CNNW,CNNW_20161028_000000_Anderson_Cooper_360,Anderson Cooper 360,0.0,0,0,0,0,October,9
+2016-11-03,CNNW,CNNW_20161103_010000_Anderson_Cooper_360,Anderson Cooper 360,0.0,0,0,0,0,November,15
+2016-10-05,FOXNEWSW,FOXNEWSW_20161005_030000_The_Kelly_File,The Kelly File,3.0,2,2,0,0,October,4
+2016-11-18,FOXNEWSW,FOXNEWSW_20161118_040000_The_OReilly_Factor,The O'Reilly Factor,3.0,0,2,0,0,November,30
+2016-10-28,FOXNEWSW,FOXNEWSW_20161028_010000_The_Kelly_File,The Kelly File,0.0,0,0,0,0,October,9
+2016-11-03,MSNBCW,MSNBCW_20161103_020000_The_Last_Word_With_Lawrence_ODonnell,The Last Word With Lawrence O'Donnell,0.0,0,0,0,0,November,15
+2016-11-04,FOXNEWSW,FOXNEWSW_20161104_030000_The_OReilly_Factor,The O'Reilly Factor,0.0,0,0,0,0,November,16
+2016-09-02,MSNBCW,MSNBCW_20160902_010000_The_Rachel_Maddow_Show,The Rachel Maddow Show,0.0,0,0,0,0,September,24
+2016-10-11,FOXNEWSW,FOXNEWSW_20161011_000000_The_OReilly_Factor,The O'Reilly Factor,0.0,0,0,0,0,October,2
+2016-09-26,CNNW,CNNW_20160926_060000_Anderson_Cooper_360,Anderson Cooper 360,0.0,0,0,0,0,September,0
+2016-10-15,MSNBCW,MSNBCW_20161015_100000_The_Rachel_Maddow_Show,The Rachel Maddow Show,2.0,0,1,0,0,October,4
+2016-11-16,MSNBCW,MSNBCW_20161116_030000_The_Last_Word_With_Lawrence_ODonnell,The Last Word With Lawrence O'Donnell,0.0,0,0,0,0,November,28
+2016-09-23,CNNW,CNNW_20160923_230000_Erin_Burnett_OutFront,Erin Burnett OutFront,1.0,0,0,0,0,September,3
+2016-10-12,MSNBCW,MSNBCW_20161012_040000_The_Rachel_Maddow_Show,The Rachel Maddow Show,2.0,2,0,0,0,October,3
